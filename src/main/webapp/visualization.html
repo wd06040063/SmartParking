@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数据可视化</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet"href="./css/visual.css">
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="real-time">
+        <h2>实时记录</h2>
+        <div class="real-time-in">
+            <img src="images/read.png" alt="">
+            <span>辽A 123456 </span> 停入 <span> 12 </span> 号车位
+            <div class="real-time-t">
+                时间：<span> 13 </span>时<span> 21 </span>分
+            </div>
+        </div>
+        <div class="real-time-out">
+            <img src="images/green.png" alt="">
+            <span> 辽A 123456 </span> 离开 <span> 12 </span> 号车位
+            <div class="real-time-t" style="background-color: #d8efd9;">
+                时间：<span> 13 </span>时<span> 21 </span>分
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-sm12 layui-col-md5" style="margin: 20px 2%;width: 45%">
+        <div class="layui-card">
+            <div class="layui-card-header" style="font-weight: bold">停车场情况</div>
+            <div class="layui-card-body" style="min-height: 280px;">
+                <div id="main3" class="layui-col-sm12" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-sm12 layui-col-md5" style="margin: 20px 2%;width: 45%">
+        <div class="layui-card">
+            <div class="layui-card-header" style="font-weight: bold">收入情况</div>
+            <div class="layui-card-body" style="min-height: 280px;">
+                <div id="main4" class="layui-col-sm12" style="height: 300px;"></div>
+            </div>
+        </div>
+    </div>
+    <div class="layui-col-sm12 layui-col-md6"style="margin: 20px 2%;width: 94%">
+        <div class="layui-card">
+            <div class="layui-card-header" style="font-weight: bold">今日入库/出库时间曲线</div>
+            <div class="layui-card-body" style="min-height: 280px;">
+                <div id="main2" class="layui-col-sm12" style="height: 300px;"></div>
+
+            </div>
+        </div>
+    </div>
+
+
+   <!-- <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">最新一周新增用户</div>
+                <div class="layui-card-body" style="min-height: 280px;">
+                    <div id="main1" class="layui-col-sm12" style="height: 300px;"></div>
+
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main3'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            color:['#519edd','#9384f1'],
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['空闲车位','已用车位']
+            },
+            series : [
+                {
+                    name: '停车情况',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'空闲车位'},
+                        {value:310, name:'已用车位'},
+
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main4'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            color:['#519edd','#83d587','#ff7b8c'],
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['支付宝收入','微信收入','现金收入']
+            },
+            series : [
+                {
+                    name: '收入情况',
+                    type: 'pie',
+                    radius : '55%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:335, name:'支付宝收入'},
+                        {value:310, name:'微信收入'},
+                        {value:210, name:'现金收入'},
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main2'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            color:['#9384f1','#83d587'],
+            tooltip : {
+                trigger: 'axis',
+                axisPointer: {
+                    type: 'cross',
+                    label: {
+                        backgroundColor: '#ffcd31'
+                    }
+                },
+
+            },
+            grid: {
+                top: '5%',
+                right: '2%',
+                left: '1%',
+                bottom: '10%',
+                containLabel: true
+            },
+            xAxis : [
+                {
+                    type : 'category',
+                    boundaryGap : false,
+                    data : ['00:00','03:00','06:00','09:00','12:00','15:00','18:00','21:00','00:00']
+                }
+            ],
+            yAxis : [
+                {
+                    type : 'value'
+                }
+            ],
+            series : [
+                {
+                    name:'入库',
+                    type:'line',
+                    areaStyle: {color: ["#cec7f8"],
+                    },
+                    data:[32,11, 56, 154, 312, 91, 165,289,32],
+                    smooth: true,
+                },
+                {
+                    name:'出库',
+                    type:'line',
+                    areaStyle: {color: ["#d0f5d1"],
+                    },
+                    data:[13, 9, 165, 234, 102, 347, 310,98,13],
+                    smooth: true,
+
+                }
+            ]
+        };
+
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+
+    </script>
+</div>
+</body>
+</html>

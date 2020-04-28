@@ -1,0 +1,43 @@
+.head{
+    /*width: 30px;*/
+    height: 30px;
+    padding:0 10px;
+    border-radius: 50%;
+}
+.left-nav a{
+    color: white;!important;
+}
+.layui-nav-item a:hover{
+    color: #666;!important;
+}
+.layui-nav .layui-nav-more{
+    border-color: #666 transparent transparent;!important;
+}.layui-nav .layui-nav-mored{
+     border-color: transparent transparent #1E9FFF;!important;
+ }
+.left-message{
+    height: 80px;
+    padding: 0 20px;
+    display: block;
+}
+.left-message img{
+    margin-top: 10px;
+    margin-bottom: 26px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: #1E9FFF solid 2px;
+    float: left;
+}
+.left-message span{
+    padding:20px 70px 10px 10px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    float: left;
+}
+.left-message a{
+    float: left;
+    font-size: 12px;
+    margin-left: 10px;
+}

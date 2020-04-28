@@ -1,0 +1,50 @@
+
+.real-time h2{
+    color: #666;
+    font-weight: bold;
+    margin-left: 2%;
+}
+.real-time-in{
+    background-color: #fff;
+    width: 45%;
+    margin: 20px 2%;
+    height: 72px;
+    float: left;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.real-time-in img{
+    padding: 12px 12px 12px 30px;
+}
+.real-time-in span{
+    color: #ff7b8c;
+    font-size: 18px;
+}
+.real-time-t{
+    border-radius: 10px;
+    margin: 10px 30px;
+    width: 30%;
+    height: 52px;
+    float: right;
+    background-color: #ffe7e9;
+   line-height: 52px;
+    text-align: center;
+}
+.real-time-out{
+    background-color: #fff;
+    width: 45%;
+    margin: 20px 2%;
+    height: 72px;
+    float: left;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: bold;
+}
+.real-time-out img{
+    padding: 12px 12px 12px 30px;
+}
+.real-time-out span{
+    color: #83d587;
+    font-size: 18px;
+}

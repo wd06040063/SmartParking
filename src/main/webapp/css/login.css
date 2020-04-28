@@ -1,0 +1,44 @@
+.form-bk{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #1a2673;
+    opacity: .3;
+    border-radius: 50px;
+    z-index: 0;
+}
+.on{
+    width: 50%;
+    margin:5% 50%;
+    background-color:#519edd ;
+    color: white;
+    border-radius: 40px;
+}
+.on:hover{
+    background-color: white;
+    border-radius: 40px;
+}
+.font{
+    color:white;
+    font-weight: 400
+}
+.form-input{
+    border: #519edd solid 1px;
+    border-radius: 30px;
+    background-color: rgba(81, 158, 221, 0.51);
+    color: white;
+}
+.form-input::placeholder{
+    color: #d8f0fe;
+}
+.yanzhen{
+
+    width: 55%;
+}
+.yanzhen-img{
+    float: right;
+    margin-right: 12%;
+    margin-bottom:10px;
+    display:inline-block;
+
+}
