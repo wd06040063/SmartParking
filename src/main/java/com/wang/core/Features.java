@@ -1,42 +1,40 @@
 package com.wang.core;
 
-
-
-import static org.bytedeco.javacpp.opencv_core.merge;
-import static org.bytedeco.javacpp.opencv_core.split;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_BGR2HSV;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_HSV2BGR;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_RGB2GRAY;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_THRESH_BINARY;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_THRESH_OTSU;
-import static org.bytedeco.javacpp.opencv_imgproc.cvtColor;
-import static org.bytedeco.javacpp.opencv_imgproc.equalizeHist;
-import static org.bytedeco.javacpp.opencv_imgproc.threshold;
-import static com.wang.core.CoreFunc.features;
-
 import org.bytedeco.javacpp.opencv_core.Mat;
 import org.bytedeco.javacpp.opencv_core.MatVector;
 
+import static org.bytedeco.javacpp.opencv_core.merge;
+import static org.bytedeco.javacpp.opencv_core.split;
+import static org.bytedeco.javacpp.opencv_imgproc.*;
+import static com.wang.core.CoreFunc.features;
 
+/**
+ * 
+ * @author Created by fanwenjie
+ * @author lin.yao
+ *
+ */
 public class Features implements SVMCallback {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see org.easypr.core.SVMCallback#getHisteqFeatures(org.bytedeco.javacpp.
      * opencv_core.Mat)
      */
+    @Override
     public Mat getHisteqFeatures(final Mat image) {
         return histeq(image);
     }
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see
      * org.easypr.core.SVMCallback#getHistogramFeatures(org.bytedeco.javacpp
      * .opencv_core.Mat)
      */
+    @Override
     public Mat getHistogramFeatures(Mat image) {
         Mat grayImage = new Mat();
         cvtColor(image, grayImage, CV_RGB2GRAY);
@@ -49,11 +47,12 @@ public class Features implements SVMCallback {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see
      * org.easypr.core.SVMCallback#getSIFTFeatures(org.bytedeco.javacpp.opencv_core
      * .Mat)
      */
+    @Override
     public Mat getSIFTFeatures(final Mat image) {
         // TODO: 待完善
         return null;
@@ -61,11 +60,12 @@ public class Features implements SVMCallback {
 
     /*
      * (non-Javadoc)
-     *
+     * 
      * @see
      * org.easypr.core.SVMCallback#getHOGFeatures(org.bytedeco.javacpp.opencv_core
      * .Mat)
      */
+    @Override
     public Mat getHOGFeatures(final Mat image) {
         // TODO: 待完善
         return null;

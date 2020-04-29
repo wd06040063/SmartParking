@@ -161,9 +161,10 @@
             success:function(data){
                 if(data.code==100)
                 {
-                    alert("入库成功！");
-
-                    window.location.href="${APP_PATH }/index/toindex";
+                    alert("自动入库成功！识别车号为："+data.extend.vb_msg);
+                    $("#myModal").modal('hide');
+                    $("#parkInfo").attr("href","${APP_PATH }/index/findAllCar");
+                    $("#parkInfo").click();
                 }else{
                     alert(data.extend.va_msg);
                 }

@@ -1,28 +1,26 @@
 package com.wang.core;
 
+import org.bytedeco.javacpp.opencv_core.*;
+
+import java.util.Vector;
 
 import static org.bytedeco.javacpp.opencv_core.*;
 import static org.bytedeco.javacpp.opencv_highgui.imwrite;
 import static org.bytedeco.javacpp.opencv_imgproc.*;
 
-import java.util.Vector;
-
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_core.MatVector;
-import org.bytedeco.javacpp.opencv_core.Point;
-import org.bytedeco.javacpp.opencv_core.Point2f;
-import org.bytedeco.javacpp.opencv_core.RotatedRect;
-import org.bytedeco.javacpp.opencv_core.Scalar;
-import org.bytedeco.javacpp.opencv_core.Size;
-
+/**
+ * @author Created by fanwenjie
+ * @author lin.yao
+ * 
+ */
 public class PlateLocate {
 
     /**
      * 生活模式与工业模式切换
-     *
+     * 
      * @param islifemode
      *            如果为真，则设置各项参数为定位生活场景照片（如百度图片）的参数，否则恢复默认值。
-     *
+     * 
      */
     public void setLifemode(boolean islifemode) {
         if (islifemode) {
@@ -46,7 +44,7 @@ public class PlateLocate {
 
     /**
      * 定位车牌图像
-     *
+     * 
      * @param src
      *            原始图像
      * @return 一个Mat的向量，存储所有抓取到的图像
@@ -173,7 +171,7 @@ public class PlateLocate {
                     Mat rotmat = getRotationMatrix2D(minRect.center(), angle, 1);
                     Mat img_rotated = new Mat();
                     warpAffine(src, img_rotated, rotmat, src.size()); // CV_INTER_CUBIC
-
+                    
                     Mat resultMat = showResultMat(img_rotated, rect_size, minRect.center(), k++);
                     resultVec.add(resultMat);
                 }
@@ -242,7 +240,7 @@ public class PlateLocate {
 
     /**
      * 是否开启调试模式
-     *
+     * 
      * @param debug
      */
     public void setDebug(boolean debug) {
@@ -251,27 +249,27 @@ public class PlateLocate {
 
     /**
      * 获取调试模式状态
-     *
+     * 
      * @return
      */
     public boolean getDebug() {
         return debug;
     }
-
+    
     /**
      * 对minAreaRect获得的最小外接矩形，用纵横比进行判断
-     *
+     * 
      * @param mr
      * @return
      */
     private boolean verifySizes(RotatedRect mr) {
         float error = this.error;
 
-        // China car plate size: 440mm*140mm，aspect 3.142857
+        // China car plate size: 440mm*140mm，aspect 3.142857      
         float aspect = this.aspect;
         int min = 44 * 14 * verifyMin; // minimum area
         int max = 44 * 14 * verifyMax; // maximum area
-
+        
         // Get only patchs that match to a respect ratio.
         float rmin = aspect - aspect * error;
         float rmax = aspect + aspect * error;
@@ -280,13 +278,13 @@ public class PlateLocate {
         float r = mr.size().width() / mr.size().height();
         if (r < 1)
             r = mr.size().height() / mr.size().width();
-
+        
         return area >= min && area <= max && r >= rmin && r <= rmax;
     }
 
     /**
      * 显示最终生成的车牌图像，便于判断是否成功进行了旋转。
-     *
+     * 
      * @param src
      * @param rect_size
      * @param center

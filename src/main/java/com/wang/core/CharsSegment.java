@@ -1,41 +1,24 @@
 package com.wang.core;
 
-
-
-import static org.bytedeco.javacpp.opencv_core.CV_32F;
-import static org.bytedeco.javacpp.opencv_core.countNonZero;
-import static org.bytedeco.javacpp.opencv_highgui.imwrite;
-import static org.bytedeco.javacpp.opencv_imgproc.BORDER_CONSTANT;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_CHAIN_APPROX_NONE;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_RETR_EXTERNAL;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_RGB2GRAY;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_THRESH_BINARY;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_THRESH_BINARY_INV;
-import static org.bytedeco.javacpp.opencv_imgproc.CV_THRESH_OTSU;
-import static org.bytedeco.javacpp.opencv_imgproc.INTER_LINEAR;
-import static org.bytedeco.javacpp.opencv_imgproc.boundingRect;
-import static org.bytedeco.javacpp.opencv_imgproc.cvtColor;
-import static org.bytedeco.javacpp.opencv_imgproc.findContours;
-import static org.bytedeco.javacpp.opencv_imgproc.resize;
-import static org.bytedeco.javacpp.opencv_imgproc.threshold;
-import static org.bytedeco.javacpp.opencv_imgproc.warpAffine;
-import static com.wang.core.CoreFunc.getPlateType;
+import org.bytedeco.javacpp.opencv_core.*;
+import com.wang.utils.Convert;
 
 import java.util.Vector;
 
-import org.bytedeco.javacpp.opencv_core.Mat;
-import org.bytedeco.javacpp.opencv_core.MatVector;
-import org.bytedeco.javacpp.opencv_core.Rect;
-import org.bytedeco.javacpp.opencv_core.Scalar;
-import org.bytedeco.javacpp.opencv_core.Size;
-import com.wang.utils.Convert;
+import static org.bytedeco.javacpp.opencv_core.*;
+import static org.bytedeco.javacpp.opencv_highgui.imwrite;
+import static org.bytedeco.javacpp.opencv_imgproc.*;
+import static com.wang.core.CoreFunc.getPlateType;
 
-
+/**
+ * @author lin.yao
+ * 
+ */
 public class CharsSegment {
 
     /**
      * 字符分割
-     *
+     * 
      * @param input
      * @param resultVec
      * @return <ul>
@@ -59,16 +42,16 @@ public class CharsSegment {
         Mat tmpMat = new Mat(input, new Rect((int) (w * 0.1), (int) (h * 0.1), (int) (w * 0.8), (int) (h * 0.8)));
 
         switch (getPlateType(tmpMat, true)) {
-            case BLUE:
-                threshold(input_grey, img_threshold, 10, 255, CV_THRESH_OTSU + CV_THRESH_BINARY);
-                break;
+        case BLUE:
+            threshold(input_grey, img_threshold, 10, 255, CV_THRESH_OTSU + CV_THRESH_BINARY);
+            break;
 
-            case YELLOW:
-                threshold(input_grey, img_threshold, 10, 255, CV_THRESH_OTSU + CV_THRESH_BINARY_INV);
-                break;
+        case YELLOW:
+            threshold(input_grey, img_threshold, 10, 255, CV_THRESH_OTSU + CV_THRESH_BINARY_INV);
+            break;
 
-            default:
-                return -3;
+        default:
+            return -3;
         }
 
         if (this.isDebug) {
@@ -163,7 +146,7 @@ public class CharsSegment {
 
     /**
      * 字符尺寸验证
-     *
+     * 
      * @param r
      * @return
      */
@@ -189,7 +172,7 @@ public class CharsSegment {
 
     /**
      * 字符预处理: 统一每个字符的大小
-     *
+     * 
      * @param in
      * @return
      */
@@ -215,7 +198,7 @@ public class CharsSegment {
      * 去除车牌上方的钮钉
      * <p>
      * 计算每行元素的阶跃数，如果小于X认为是柳丁，将此行全部填0（涂黑）， X可根据实际调整
-     *
+     * 
      * @param img
      * @return
      */
@@ -243,7 +226,7 @@ public class CharsSegment {
 
     /**
      * 根据特殊车牌来构造猜测中文字符的位置和大小
-     *
+     * 
      * @param rectSpe
      * @return
      */
@@ -261,7 +244,7 @@ public class CharsSegment {
 
     /**
      * 找出指示城市的字符的Rect，例如苏A7003X，就是A的位置
-     *
+     * 
      * @param vecRect
      * @return
      */
@@ -301,7 +284,7 @@ public class CharsSegment {
      * <li>把特殊字符Rect左边的全部Rect去掉，后面再重建中文字符的位置;
      * <li>从特殊字符Rect开始，依次选择6个Rect，多余的舍去。
      * <ul>
-     *
+     * 
      * @param vecRect
      * @param outRect
      * @param specIndex
@@ -325,7 +308,7 @@ public class CharsSegment {
 
     /**
      * 将Rect按位置从左到右进行排序
-     *
+     * 
      * @param vecRect
      * @param out
      * @return
@@ -420,7 +403,6 @@ public class CharsSegment {
     private int liuDingSize = DEFAULT_LIUDING_SIZE;
     private int theMatWidth = DEFAULT_MAT_WIDTH;
 
-    @SuppressWarnings("unused")
     private int colorThreshold = DEFAULT_COLORTHRESHOLD;
     private float bluePercent = DEFAULT_BLUEPERCEMT;
     private float whitePercent = DEFAULT_WHITEPERCEMT;

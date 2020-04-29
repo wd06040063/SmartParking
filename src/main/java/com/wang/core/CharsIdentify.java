@@ -1,18 +1,20 @@
 package com.wang.core;
 
-
-
-import static org.bytedeco.javacpp.opencv_core.CV_32FC1;
-import static com.wang.core.CoreFunc.features;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.bytedeco.javacpp.opencv_core.Mat;
 import org.bytedeco.javacpp.opencv_ml.CvANN_MLP;
 import com.wang.utils.Convert;
 
+import java.util.HashMap;
+import java.util.Map;
 
+import static org.bytedeco.javacpp.opencv_core.CV_32FC1;
+import static com.wang.core.CoreFunc.features;
+
+/**
+ * @author Created by fanwenjie
+ * @author lin.yao
+ * 
+ */
 public class CharsIdentify {
 
     public CharsIdentify() {
@@ -53,13 +55,10 @@ public class CharsIdentify {
         }
     }
 
-
     /**
-     *
      * @param input
      * @param isChinese
-     * @param isSpeci
-     * @return result
+     * @return
      */
     public String charsIdentify(final Mat input, final Boolean isChinese, final Boolean isSpeci) {
         String result = "";
@@ -77,13 +76,6 @@ public class CharsIdentify {
         return result;
     }
 
-    /**
-     *
-     * @param f
-     * @param isChinses
-     * @param isSpeci
-     * @return result
-     */
     private int classify(final Mat f, final Boolean isChinses, final Boolean isSpeci) {
         int result = -1;
         Mat output = new Mat(1, numAll, CV_32FC1);

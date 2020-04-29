@@ -10,6 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.sun.istack.logging.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -19,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.sun.istack.logging.Logger;
 import com.wang.dto.FormData;
 import com.wang.entity.ParkInfo;
 import com.wang.entity.Result;
@@ -34,6 +34,19 @@ import com.wang.service.PlateRecognise;
 import com.wang.service.UserService;
 import com.wang.serviceImpl.PlateRecogniseImpl;
 
+import static org.bytedeco.javacpp.opencv_highgui.imread;
+import static com.wang.core.CoreFunc.getPlateType;
+import static com.wang.core.CoreFunc.projectedHistogram;
+import static com.wang.core.CoreFunc.showImage;
+
+import java.util.Vector;
+
+import org.bytedeco.javacpp.opencv_core.Mat;
+import com.wang.core.CharsIdentify;
+import com.wang.core.CharsRecognise;
+import com.wang.core.CoreFunc;
+import com.wang.core.PlateDetect;
+import com.wang.core.PlateLocate;
 @Controller
 public class ImageRPController {
 
@@ -119,7 +132,7 @@ public class ImageRPController {
 		String fileName = file.getOriginalFilename();
 		@SuppressWarnings("unused")
 		String suffixName = fileName.substring(fileName.lastIndexOf("."));
-		String filePath = "C:\\springUpload\\image\\";
+		String filePath = "C:/springUpload/image/";
 		// fileName = UUID.randomUUID() + suffixName;
 		File dest = new File(filePath + fileName);
 		if (!dest.getParentFile().exists()) {
@@ -131,7 +144,10 @@ public class ImageRPController {
 			PlateRecognise plateRecognise = new PlateRecogniseImpl();
 			String img = filePath + fileName;
 			logger.info(img);
+			PlateDetect plateDetect = new PlateDetect();
+			plateDetect.setPDLifemode(true);
 			List<String> res = plateRecognise.plateRecognise(filePath + fileName);
+
 			if (res.size() < 1 || res.contains("")) {
 				logger.info("识别失败！不如换张图片试试？");
 
@@ -160,65 +176,18 @@ public class ImageRPController {
 			parkinfoservice.saveParkinfo(formData);
 			parkspaceService.changeStatus(parkId, 1);
 			//return "index";
-			return "redirect:/index/toindex";
+			return "demo";
 			//return Msg.success();
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return "redirect:/index/toindex";
+		return "demo";
 	}
 
 
-	@RequestMapping(value = "/fileUpload3")
-	public String upload3(@RequestParam("file") MultipartFile file,@RequestParam("id")int id) throws Exception, IOException {
-		int parkId=id;
-		ParkInfo parkInfo=new ParkInfo();
-		FormData formData=new FormData();
-		System.out.println(parkId);
 
-		String fileName = file.getOriginalFilename();
-		@SuppressWarnings("unused")
-		String suffixName = fileName.substring(fileName.lastIndexOf("."));
-		String filePath = "C:\\springUpload\\image\\";
-		// fileName = UUID.randomUUID() + suffixName;
-		File dest = new File(filePath + fileName);
-		if (!dest.getParentFile().exists()) {
-			dest.getParentFile().mkdirs();
-		}
-
-		file.transferTo(dest);
-		PlateRecognise plateRecognise = new PlateRecogniseImpl();
-		String img = filePath + fileName;
-		logger.info(img);
-		List<String> res = plateRecognise.plateRecognise(filePath + fileName);
-		String carNum=res.get(0);
-		Result result = new Result(201, plateRecognise.plateRecognise(filePath + fileName),
-				new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		logger.info(result.toString());
-		if (depotcardService.findCardnumByCarnum(carNum)!=null) {
-			formData.setCardNum(depotcardService.findCardnumByCarnum(carNum));
-			formData.setCarNum(carNum);
-			formData.setParkNum(parkId);
-			formData.setParkTem(0);
-		}else {
-			formData.setCardNum("");
-			formData.setCarNum(carNum);
-			formData.setParkNum(parkId);
-			formData.setParkTem(1);
-		}
-
-		parkinfoservice.saveParkinfo(formData);
-		parkspaceService.changeStatus(parkId, 1);
-		//return "index";
-		return "redirect:/index/toindex";
-		//return Msg.success();
-
-	}
 
 
 	@RequestMapping(method = RequestMethod.GET, value = "/plateRecognise")

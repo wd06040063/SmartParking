@@ -1,13 +1,15 @@
 package com.wang.core;
 
-
-
-import org.bytedeco.javacpp.opencv_core.*;
+import org.bytedeco.javacpp.opencv_core.Mat;
 
 import java.util.Vector;
 
 
-
+/**
+ * @author Created by fanwenjie
+ * @author lin.yao
+ *
+ */
 public class PlateRecognize {
 
     public int plateRecognize(Mat src, Vector<String> licenseVec) {
