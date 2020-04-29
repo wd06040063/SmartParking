@@ -4,16 +4,18 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div  style="margin: 2%;background-color: #fff;">
 <a id="findEmail" href="" target="main"
 	onclick="$('div#main').load(this.href);return false;"></a>
-	<table class="table">
+	<div class="tables">
+	<table class="table"style="margin: 2%;width: 96%">
 				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;">信息情况</div>
+					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">信息情况</div>
 					<div class="col-lg-6" style="width: 30%; float: left;">
 						<div class="input-group">
 							<input placeholder="输入标题" id="content" type="text" class="form-control" > <span
 								class="input-group-btn">
-								<button class="btn btn-default" onclick="findByContent()" type="button">查询</button>
+								<button class="btn btn-default btn1" onclick="findByContent()" type="button">查询</button>
 							</span>
 						</div>
 						<!-- /input-group -->
@@ -22,7 +24,7 @@
 					<button style="float: left;" class="btn btn-default" type="button" onclick="addEmail()">发送信息</button>
 					</c:if>
 					<div class="dropdown" style="float: right; margin-right: 10%">
-						<button type="button" class="btn dropdown-toggle"
+						<button type="button" class="btn dropdown-toggle bt-blue"
 							id="dropdownMenu1" data-toggle="dropdown">
 							查看状态 <span class="caret"></span>
 						</button>
@@ -60,10 +62,12 @@
 						<td>${item.title }</td>
 						<td>${item.time }</td>
 						<td>${item.isSend==1?'发送':item.isRead==0?'未读':item.isRead==1?'已读':'已回复' }</td>
-						<td><input class="btn btn-default" type="button" onclick="findDetail(${item.id })" value="查看"><input class="btn btn-default" type="button" onclick="deleteEmail(${item.id})" value="删除"></td>
+						<td><input class="btn btn-default bt-blue"style="margin-right: 4px" type="button" onclick="findDetail(${item.id })" value="查看"><input class="btn btn-default bt-red" type="button" onclick="deleteEmail(${item.id})" value="删除"></td>
 					</tr>
 					</c:forEach>
 			</table>
+	</div>
+	<div class="page">
 			<ul class="pagination">
 				
 				<li><a href="${APP_PATH }/index/findAllEmail?page=${emails.current}&&tag=${tag}"
@@ -83,6 +87,8 @@
 					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
 				</c:if>
 			</ul>
+	</div>
+</div>
 <script type="text/javascript">
 	function addEmail()
 	{

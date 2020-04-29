@@ -3,9 +3,11 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-	<table class="table">
+<div  style="margin: 2%;background-color: #fff;">
+	<div class="tables">
+	<table class="table"style="margin: 2%;width: 96%">
 				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;">历史停车管理</div>
+					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">历史停车管理</div>
 					<div class="col-lg-6" style="width: 30%; float: left;">
 						<div class="input-group">
 						<c:if test="${sessionScope.user.role!=3 }">
@@ -16,7 +18,7 @@
 						</c:if>
 							 <span
 								class="input-group-btn">
-								<button class="btn btn-default" onclick="findDepotNum()" type="button">查询</button>
+								<button class="btn btn-default btn1" onclick="findDepotNum()" type="button">查询</button>
 								<a id="findAllDepot" href="" target="main"
 					onclick="$('div#main').load(this.href);return false;"></a>
 							</span>
@@ -41,10 +43,12 @@
 						<td>${item.carnum }</td>
 						<td>${item.parkin }</td>
 						<td>${item.parkout }</td>
-						<td><input class="btn btn-default" onclick="findParkinfoById(${item.id})" type="button" value="查看"></td>
+						<td><input class="btn btn-default bt-green" onclick="findParkinfoById(${item.id})" type="button" value="查看"></td>
 					</tr>
 					</c:forEach>
 			</table>
+	</div>
+		<div class="page">
 			<ul class="pagination">
 				
 				<li><a href="${APP_PATH }/index/findAllDepot?tag=${parkinfoallDatas.tag}&&page=${parkinfoallDatas.current}&&name=${parkinfoallDatas.extra}" 
@@ -64,6 +68,9 @@
 					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
 				</c:if>
 			</ul>
+		</div>
+
+</div>
 <script type="text/javascript">
 	//查看详情
 	function findParkinfoById(item){

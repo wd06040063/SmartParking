@@ -3,24 +3,26 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div  style="margin: 2%;background-color: #fff;">
 <a id="findDepotcard" href="" target="main"
 					onclick="$('div#main').load(this.href);return false;"></a>
-	<table class="table">
+	<div class="tables">
+	<table class="table" style="margin: 2%;width: 96%">
 				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;">停车卡管理</div>
+					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">停车卡管理</div>
 					<c:if test="${sessionScope.user.role!=3 }">
 					<div class="col-lg-6" style="width: 30%; float: left;">
 						<div class="input-group">
 							<input id="cardnum2" placeholder="请输入卡号" type="text" class="form-control" > <span
 								class="input-group-btn">
-								<button class="btn btn-default" type="button" onclick="findDepotcardByCardnum()">查询</button>
+								<button class="btn btn-default btn1" type="button" onclick="findDepotcardByCardnum()">查询</button>
 							</span>
 						</div>
 						<!-- /input-group -->
 					</div>
-					<button style="float: left;" class="btn btn-default" type="button" onclick="addDepotCard()">添加停车卡</button>
+					<button style="float: left;" class="btn btn-default bt-yellow" type="button" onclick="addDepotCard()">添加停车卡</button>
 					</c:if>
-					<button style="float: right; margin-right: 30px" class="btn btn-default" type="button" onclick="rechargeDepotCard()">充值停车卡</button>
+					<button style="float: right; margin-right: 30px" class="btn btn-default bt-blue" type="button" onclick="rechargeDepotCard()">充值停车卡</button>
 				</caption>
 				<tr>
 					<th>序号</th>
@@ -41,10 +43,12 @@
 						<td>${item.username }</td> 	
 						<td>${item.time }</td>
 						<td>${item.islose==0?"否":"是" }</td>
-						<td><input class="btn btn-default" type="button" onclick="alertCard(${status.count})" value="修改"><c:if test="${sessionScope.user.role!=3 }"><input class="btn btn-default" type="button" onclick="deleteCard(${status.count})" value="删除"></c:if></td>
+						<td><input class="btn btn-default bt-blue" style="margin-right: 4px" type="button" onclick="alertCard(${status.count})" value="修改"><c:if test="${sessionScope.user.role!=3 }"><input class="btn btn-default bt-red" type="button" onclick="deleteCard(${status.count})" value="删除"></c:if></td>
 					</tr>
 					</c:forEach>
 			</table>
+	</div>
+	<div class="page">
 			<ul class="pagination">
 				
 				<li><a href="${APP_PATH }/index/toDepotcardIndex?tag=${depotcardManagerDatas.tag}&&page=${depotcardManagerDatas.current}&&cardnum=${depotcardManagerDatas.extra}"
@@ -64,7 +68,8 @@
 					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
 				</c:if>
 			</ul>
-			
+	</div>
+</div>
 <script type="text/javascript">
 /* 添加停车卡模态框显示*/
 function addDepotCard() {

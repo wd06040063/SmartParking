@@ -8,9 +8,6 @@
 a{
     text-decoration: none;
 }
-a:hover {
-    text-decoration: none;
-}
 html{
     width: 100%;
     height: 100%;
@@ -31,7 +28,7 @@ body{
     margin-top: 0px;
 }
 .layui-input:focus, .layui-textarea:focus {
-    border-color: #189f92!important;
+    border-color: #1E9FFF!important;
 }
 
 .layui-fluid{
@@ -68,11 +65,11 @@ body{
 }
 .page span.current{
     display: inline-block;
-    background: #009688;
+    background: #1E9FFF;
     color: #fff;
     padding: 5px;
     min-width: 15px;
-    border: 1px solid #009688;
+    border: 1px solid #1E9FFF;
 }
 .page .pagination li{
     display: inline-block;
@@ -80,9 +77,9 @@ body{
     text-align: center;
 }
 .page .pagination li.active span{
-    background: #009688;
+    background: #1E9FFF;
     color: #fff;
-    border: 1px solid #009688;
+    border: 1px solid #1E9FFF;
 
 }
 
@@ -192,7 +189,6 @@ body{
     background-color: rgba(0, 0, 0, 0.3);
 }
 .left-nav #nav li a{
-    text-decoration: none;
     font-size: 14px;
     padding: 10px 15px 10px 15px;
     display: block;
@@ -545,3 +541,100 @@ table th, table td {
     color: #393D49;
 }
 
+.tables{
+    min-height: 82vh;
+    flex-direction: column;
+}
+.btn1{
+    background-color: #1E9FFF;
+    color: #fff;
+}
+.btn1:hover{
+    background-color: rgba(30, 159, 255, 0.71);
+  color: #fff;
+    border-color: #1E9FFF;
+    transition:all .3s;
+}
+.form-control{
+    border-color: #1E9FFF;
+}
+.table tr:first-child{
+    background-color:#e0f1ff
+}
+.table td,th{
+    text-align:center
+
+}
+.table tr:hover{
+    background-color:#e0f1ff ;
+    transition: all .3s;
+}
+.bt-blue{
+    border-color: #1E9FFF;
+    background-color: #fff;
+}
+.bt-green{
+    border-color: #83d587;
+    background-color: #83d587;
+    color: #fff;
+}
+.bt-yellow{
+   border-color: #ffcd31;
+}
+.bt-purple{
+    border-color: #9587f1;
+}
+.bt-red{
+    border-color: #ff7b8c;
+}
+.bt-blue:hover{
+    border-color: #1E9FFF;
+    background-color: #1E9FFF;
+    color: #fff;
+}
+.bt-green:hover{
+    border-color: #9dd5b2;
+    background-color: rgb(143, 227, 147);
+    color: #fff;
+    transition: all .3s;
+
+}
+.bt-yellow:hover{
+    border-color: #ffcd31;
+    background-color: #ffcd31;
+    color: #fff;
+}
+.bt-purple:hover{
+    border-color: #9587f1;
+    background-color: #9587f1;
+    color: #fff;
+}
+.bt-red:hover{
+    border-color: #ff7b8c;
+    background-color: #ff7b8c;
+    color: #fff;
+}
+.page li>a{
+color: #666;
+}
+.page ul{
+    margin: 0;!important;
+}
+.page li>a:hover,li>a:active{
+    background-color: #1E9FFF;
+    color: #fff;
+    transition: all .3s;
+}
+.layui-laydate .layui-this{
+    background-color: #1e9fff!important;!important;
+}
+.income-ad{
+    float: right;
+    font-size: 12px;
+    margin-right: 6%;
+    margin-top: -3%;
+    color: #ff7b8c;
+    padding: 2px 4px;
+    border: #ff7b8c solid 1px;
+    border-radius: 5px;
+}

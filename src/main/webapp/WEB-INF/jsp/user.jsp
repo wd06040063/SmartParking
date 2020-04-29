@@ -4,16 +4,18 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div  style="margin: 2%;background-color: #fff;">
 <a id="findUser" href="" target="main"
 	onclick="$('div#main').load(this.href);return false;"></a>
-<table class="table">
+	<div class="tables">
+<table class="table"style="margin: 2%;width: 96%">
 	<caption>
-		<div style="float: left; line-height: 10px; padding: 10px 10px;">用户管理</div>
+		<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">用户管理</div>
 		<c:if test="${sessionScope.user.role!=3 }">
-		<button class="btn btn-default" type="button" onclick="addUser()">添加用户</button>
+		<button class="btn btn-default btn1" type="button" onclick="addUser()">添加用户</button>
 		<input id="user_role" value="${sessionScope.user.role!=3 }" hidden="hidden"/>
 		<div class="dropdown" style="float: right; margin-right: 10%">
-			<button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+			<button type="button"style="" class="btn dropdown-toggle bt-blue" id="dropdownMenu1"
 				data-toggle="dropdown">
 				查看用户 <span class="caret"></span>
 			</button>
@@ -56,15 +58,17 @@
 			<c:if test="${sessionScope.user.role!=3 }">
 			<td>${item.cardnum }</td>
 			</c:if>
-			<td><input class="btn btn-default" type="button" onclick="editUser(${item.id})" value="修改">
+			<td><input class="btn btn-default bt-blue" type="button" onclick="editUser(${item.id})" value="修改">
 			<c:if test="${sessionScope.user.role!=3 }">
 			<input
-				class="btn btn-default" type="button" onclick="deleteUser( '${item.username }',${item.id})" value="删除">
+				class="btn btn-default bt-red" type="button" onclick="deleteUser( '${item.username }',${item.id})" value="删除">
 			</c:if>
 				</td>
 		</tr>
 	</c:forEach>
 </table>
+	</div>
+	<div class="page">
 <ul class="pagination">
 				
 				<li><a href="${APP_PATH }/index/findAllUser?tag=${users.tag}&&page=${users.current}"
@@ -84,6 +88,8 @@
 					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
 				</c:if>
 			</ul>
+	</div>
+</div>
 <script type="text/javascript">
 	/* 添加用户模态框显示*/
 	function addUser() {

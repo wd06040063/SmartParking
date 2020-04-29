@@ -89,14 +89,13 @@
         <ul id="nav">
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="首页">&#xe6b8;</i>
+                    <i class="iconfont left-nav-li" lay-tips="首页">&#xe696;</i>
                     <cite>首页</cite>
-                    <i class="iconfont nav_right">&#xe697;</i></a>
-
+                    </a>
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="停车位管理">&#xe723;</i>
+                    <i class="iconfont left-nav-li" lay-tips="停车位管理">&#xe6a9;</i>
                     <cite>车位管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
@@ -132,12 +131,12 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="城市联动">&#xe723;</i>
+                    <i class="iconfont left-nav-li" lay-tips="优惠券管理">&#xe75f;</i>
                     <cite>优惠券管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('三级地区联动','city.html')">
+                        <a onclick="xadmin.add_tab('优惠券列表','city.html')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>优惠券列表</cite></a>
                     </li>
@@ -145,7 +144,7 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="城市联动">&#xe723;</i>
+                    <i class="iconfont left-nav-li" lay-tips="违规管理">&#xe6b6;</i>
                     <cite>违规管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
@@ -158,7 +157,7 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="城市联动">&#xe723;</i>
+                    <i class="iconfont left-nav-li" lay-tips="城市联动">&#xe70c;</i>
                     <cite>收入管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
@@ -199,12 +198,12 @@
             </li>
             <li>
                 <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="图标字体">&#xe6b4;</i>
+                    <i class="iconfont left-nav-li" lay-tips="历史停车">&#xe6b4;</i>
                     <cite>历史停车</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
-                        <a onclick="xadmin.add_tab('图标对应字体','unicode.html')">
+                        <a onclick="xadmin.add_tab('历史停车列表','unicode.html')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>历史停车列表</cite></a>
                     </li>
@@ -219,15 +218,8 @@
 <!-- 右侧主体开始 -->
 <div class="page-content">
     <div class="layui-tab tab" lay-filter="xbs_tab" lay-allowclose="false">
-        <ul class="layui-tab-title">
-            <li class="home">
-                <i class="layui-icon">&#xe68e;</i>我的桌面</li></ul>
-        <div class="layui-unselect layui-form-select layui-form-selected" id="tab_right">
-            <dl>
-                <dd data-type="this">关闭当前</dd>
-                <dd data-type="other">关闭其它</dd>
-                <dd data-type="all">关闭全部</dd></dl>
-        </div>
+
+
         <div class="layui-tab-content">
             <div class="layui-tab-item layui-show">
                 <iframe src='${APP_PATH }/visualization.html' frameborder="0" scrolling="yes" class="x-iframe"></iframe>

@@ -3,33 +3,41 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div  style="margin: 2%;background-color: #fff;">
 <a id="findAllIncome" href="" target="main"
 	onclick="$('div#main').load(this.href);return false;"></a>
 
 <form id="queryIncomes">
-	<table class="table">
+	<div class="tables">
+	<table class="table"style="margin: 2%;width: 96%">
 				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;">收入管理</div>
+					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">收入管理</div>
 					<div style="float: left;">
-					<input type="text" value="" placeholder="开始时间" id="datetimepickerStart"/>
-					--
-					<input type="text" value="" placeholder="结束时间" id="datetimepickerEnd"/>
+
+							<form class="layui-form layui-col-space5">
+								<div class="layui-inline layui-show-xs-block">
+									<input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start"></div>
+								<div class="layui-inline layui-show-xs-block">
+									<input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end"></div>
+
+							</form>
+
 					</div>
 					<div class="col-lg-6" style="width: 30%; float: left;">
 						<div class="input-group">
 							<input id="content"  placeholder="卡号/车牌号" type="text" class="form-control" > <span
 								class="input-group-btn">
-								<button onclick="findByCondition()" class="btn btn-default" type="button">查询</button>
+								<button onclick="findByCondition()" class="btn btn-default btn1" type="button">查询</button>
 							</span>
 						</div>
 						<!-- /input-group -->
 					</div>
-						
+
 					<div class="dropdown" style="float: right; margin-right: 10%">
 				
 		<!-- <button onclick="findByCondition()" class="btn btn-default" type="button">收入分析</button> -->
-				<input type="button" value="收入分析" onclick="newDoc()" class="btn btn-default">
-				
+				<!--<input type="button" value="收入分析" onclick="newDoc()" class="btn btn-default">
+
 			<button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
 				data-toggle="dropdown">
 				<span id="income_method">收入方式</span><span class="caret"></span>
@@ -39,7 +47,7 @@
 				<li role="presentation" onclick="chooseMethod(0)">现金</li>
 				<li role="presentation" onclick="chooseMethod(2)">微信</li>
 				<li role="presentation" onclick="chooseMethod(1)">支付宝</li>
-			</ul>
+			</ul>-->
 		</div>
 				</caption>
 				<tr>
@@ -65,10 +73,11 @@
 						<td>${item.time }</td>
 						<td>${item.duration }</td>
 						<td>${item.isillegal }</td>
-						<td><input class="btn btn-default" type="button" onclick="findIncomeInfo(${item.id })" value="查看"></td>
+						<td><input class="btn btn-default bt-green" type="button" onclick="findIncomeInfo(${item.id })" value="查看"></td>
 					</tr>
 					</c:forEach>
 			</table>
+		<div class="page">
 			<ul class="pagination">
 				
 				<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current}"
@@ -88,10 +97,69 @@
 					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
 				</c:if>
 			</ul>
-			<div style="float: right;margin-right: 6%">
+		</div>
+			<div class="income-ad" >
 					总收入：${countMoney}元<br>
 					</div>
-</form>		
+	</div>
+</form>
+</div>
+<script>layui.use('laydate',
+		function() {
+			var laydate = layui.laydate;
+
+			//执行一个laydate实例
+			laydate.render({
+				elem: '#start' //指定元素
+			});
+
+			//执行一个laydate实例
+			laydate.render({
+				elem: '#end' //指定元素
+			});
+
+		});</script>
+<script>layui.use('table',
+		function() {
+			var table = layui.table;
+
+			//监听单元格编辑
+			table.on('edit(test)',
+					function(obj) {
+						var value = obj.value //得到修改后的值
+								,
+								data = obj.data //得到所在行所有键值
+								,
+								field = obj.field; //得到字段
+						layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+					});
+
+			//头工具栏事件
+			table.on('toolbar(test)',
+					function(obj) {
+						var checkStatus = table.checkStatus(obj.config.id);
+						switch (obj.event) {
+							case 'getCheckData':
+								var data = checkStatus.data;
+								layer.alert(JSON.stringify(data));
+								break;
+							case 'getCheckLength':
+								var data = checkStatus.data;
+								layer.msg('选中了：' + data.length + ' 个');
+								break;
+							case 'isAll':
+								layer.msg(checkStatus.isAll ? '全选': '未全选');
+								break;
+						};
+					});
+		});</script>
+<script>var _hmt = _hmt || []; (function() {
+	var hm = document.createElement("script");
+	hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
+	var s = document.getElementsByTagName("script")[0];
+	s.parentNode.insertBefore(hm, s);
+})();</script>
+
 <script type="text/javascript">
 $('#datetimepickerStart').datetimepicker({
     format: 'yyyy-mm-dd hh:ii'

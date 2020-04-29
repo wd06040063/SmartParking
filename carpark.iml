@@ -39,19 +39,7 @@
     </content>
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
-    <orderEntry type="module-library">
-      <library name="jsp-api.jar">
-        <CLASSES>
-          <root url="jar://D:/apache-tomcat-8.0.53/lib/jsp-api.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="library" exported="" name="opencv-310" level="project" />
-    <orderEntry type="library" name="respond" level="application" />
-    <orderEntry type="library" name="html5" level="application" />
-    <orderEntry type="library" name="echarts" level="application" />
+    <orderEntry type="library" exported="" scope="PROVIDED" name="Tomcat 9.0.27" level="application_server_libraries" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.9.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-nop:1.7.2" level="project" />

@@ -3,11 +3,13 @@
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div  style="margin: 2%;background-color: #fff;">
 <a id="findAllCoupon" href="" target="main"
 	onclick="$('div#main').load(this.href);return false;"></a>
-	<table class="table">
+	<div class="tables">
+	<table class="table" style="margin: 2%;width: 96%">
 				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;">优惠券管理</div>
+					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">优惠券管理</div>
 					<div class="col-lg-6" style="width: 30%; float: left;">
 						<div class="input-group">
 							<c:if test="${sessionScope.user.role!=3 }">
@@ -18,7 +20,7 @@
 							</c:if>
 							<span
 								class="input-group-btn">
-								<button class="btn btn-default" onclick="findCouponByName()" type="button">查询</button>
+								<button class="btn btn-default btn1" onclick="findCouponByName()" type="button">查询</button>
 							</span>
 							<a id="findAllCoupon" href="" target="main"
 					onclick="$('div#main').load(this.href);return false;"></a>
@@ -26,7 +28,7 @@
 						<!-- /input-group -->
 					</div>
 					<c:if test="${sessionScope.user.role==1 }">
-					<button class="btn btn-default" onclick="addCoupon()" type="button">生成优惠券</button>
+					<button class="btn btn-default bt-blue" onclick="addCoupon()" type="button">生成优惠券</button>
 					</c:if>
 				</caption>
 				<tr>
@@ -44,10 +46,12 @@
 						<td>${item.money }</td>
 						<td>${item.cardnum }</td>
 						<td>${item.time }</td>
-						<td><input class="btn btn-default" type="button" onclick="findCouponById(${item.id })" value="查看"><input class="btn btn-default" type="button" onclick="deleteCouponInfo(${item.id})" value="删除"></td>
+						<td><input class="btn btn-default bt-blue" style="margin-right: 4px" type="button" onclick="findCouponById(${item.id })" value="查看"><input class="btn btn-default bt-red" type="button" onclick="deleteCouponInfo(${item.id})" value="删除"></td>
 					</tr>
 					</c:forEach>
 			</table>
+	</div>
+	<div class="page">
 			<ul class="pagination">
 				
 				<li><a href="${APP_PATH }/index/findAllCoupon?page=${couponDatas.current}&&name=${couponDatas.extra}"
@@ -67,7 +71,8 @@
 					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
 				</c:if>
 			</ul>
-			
+	</div>
+</div>
 <script type="text/javascript">
 	function findCouponByName()
 	{

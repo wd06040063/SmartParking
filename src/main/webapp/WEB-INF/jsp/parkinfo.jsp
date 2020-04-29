@@ -3,44 +3,22 @@
     pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<div  style="margin: 2%;background-color: #fff;">
 <a id="parkInfo" href="" target="main"
    onclick="$('div#main').load(this.href);return false;"></a>
-            <table class="table">
+    <div class="tables">
+            <table class="table" style="margin: 2%;width: 96%">
                 <caption>
-                    <div style="float: left; line-height: 10px; padding: 10px 10px;">停车位管理</div>
+                    <div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">停车位管理</div>
                     <div class="col-lg-6" style="width: 30%; float: left;">
                         <div class="input-group">
                             <input id="inputcardnum" placeholder="请输入卡号" type="text" class="form-control">
                             <span class="input-group-btn">
-								<button class="btn btn-default" type="button" onclick="checkOutByCardnum()">出库</button>
+								<button class="btn btn-default btn1" type="button" onclick="checkOutByCardnum()">出库</button>
 							</span>
                         </div>
-
                         <!-- /input-group -->
                     </div>
-                    <span><input type="button" value="停车情况" onclick="nowCar()" class="btn btn-default"></span>
-                        <%-- <a id="depotcardIndex" href="${APP_PATH }/index/line" target="main"
-                    onclick="$('div#main').load(this.href);return false;"><span class="glyphicon glyphicon-credit-card"></span> 停车情况</a> --%>
-                    <div class="dropdown" style="float: right; margin-right: 10%">
-                        <button type="button" class="btn dropdown-toggle"
-                                id="dropdownMenu1" data-toggle="dropdown">
-                            查看车位 <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu"
-                            aria-labelledby="dropdownMenu1">
-                            <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                       href="${APP_PATH }/index/toindex?tag=0">全部车位</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                       href="${APP_PATH }/index/toindex?tag=1">正常车位</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                       href="${APP_PATH }/index/toindex?tag=2">临时车位</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                       href="${APP_PATH }/index/toindex?tag=3">紧急车位</a></li>
-                            <li role="presentation"><a role="menuitem" tabindex="-1"
-                                                       href="${APP_PATH }/index/toindex?tag=4">置空车位</a></li>
-                        </ul>
-                    </div>
-
                 </caption>
                 <tr>
                     <th>车位号</th>
@@ -55,27 +33,29 @@
                         <td>${item.status==0?"空":"已停" }</td>
                         <td>${item.tag==1?"正常车位":item.tag==2?"临时车位":"紧急车位" }</td>
                         <td><c:if test="${item.status==0 }">
-                            <input class="btn btn-default" type="button"
+                            <input class="btn btn-default bt-blue" type="button"
                                    onclick="checkIn(${item.parkid},${item.id })" value="手动入库">
                             <!--    <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
                             <button class="btn btn-success fileinput-button" type="button">上传</button>
                             <input type="file"   style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
                             </div>
                             -->
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
+                            <button type="button" class="btn btn-default bt-purple" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
                                 自动入库
                             </button>
                         </c:if> <c:if test="${item.status!=0 }">
                             <input onclick="checkOut(${item.parkid})"
-                                   class="btn btn-default" type="button" value="出库"/>
+                                   class="btn btn-default bt-blue" type="button" value="出库"/>
                             <input onclick="addIllegal(${item.parkid})"
-                                   class="btn btn-default" type="button" value="违规"/>
+                                   class="btn btn-default bt-red" type="button" value="违规"/>
                         </c:if>
                         </td>
-                        <td><input class="btn btn-default" type="button" onclick="checkDetail(${item.parkid})" value="查看"></td>
+                        <td><input class="btn btn-default bt-green" type="button" onclick="checkDetail(${item.parkid})" value="查看"></td>
                     </tr>
                 </c:forEach>
             </table>
+    </div>
+    <div class="page">
             <ul class="pagination">
 
                 <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current}"target="main"
@@ -91,6 +71,8 @@
                            onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
                 </c:if>
             </ul>
+    </div>
+</div>
 <script type="text/javascript">
     $(document).ready(function(){
         var role=$("#role").val();
