@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sun.istack.logging.Logger;
+import com.wang.utils.Msg;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -110,9 +111,7 @@ public class ImageRPController {
 					new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
 			logger.info(result.toString());
 			return result;
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (IllegalStateException | IOException e) {
 			e.printStackTrace();
 		}
 		List<String> responses = new ArrayList<String>();
@@ -123,7 +122,8 @@ public class ImageRPController {
 
 
 	@RequestMapping(value = "/fileUpload1")
-	public String upload(@RequestParam("file") MultipartFile file,@RequestParam("id")int id,HttpServletResponse response,HttpServletRequest request) {
+	@ResponseBody
+	public Msg upload(@RequestParam("file") MultipartFile file, @RequestParam("id")int id, HttpServletResponse response, HttpServletRequest request) {
 		int parkId=id;
 		ParkInfo parkInfo=new ParkInfo();
 		FormData formData=new FormData();
@@ -151,9 +151,9 @@ public class ImageRPController {
 			if (res.size() < 1 || res.contains("")) {
 				logger.info("识别失败！不如换张图片试试？");
 
-				//return Msg.fail().add("va_msg", "密码错误");
-				response.setHeader("refresh", "6;url="+request.getContextPath()+"/index/toindex");
-				return "error";
+				return Msg.fail().add("va_msg", "识别失败，请重新识别！");
+				//response.setHeader("refresh", "6;url="+request.getContextPath()+"/index/toindex");
+				//return "error";
 				//response.setHeader("refresh", "5;url=/index/toindex");
 				//return "redirect:/index/toindex";
 			}
@@ -172,18 +172,18 @@ public class ImageRPController {
 				formData.setParkNum(parkId);
 				formData.setParkTem(1);
 			}
-
 			parkinfoservice.saveParkinfo(formData);
 			parkspaceService.changeStatus(parkId, 1);
 			//return "index";
-			return "demo";
-			//return Msg.success();
+			//response.setHeader("refresh", "6;url="+request.getContextPath()+"/index/toindex");
+			//return "success";
+			return Msg.success();
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return "demo";
+		return Msg.fail();
 	}
 
 

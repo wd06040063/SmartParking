@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>停车场管理系统</title>
+	<title>智慧停车管理云平台</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Bootstrap -->
 	<link href="${APP_PATH }/bootstrap-3.3.5-dist/css/bootstrap.min.css"
@@ -163,7 +163,7 @@
 	<div style="width: 700px;height: 360px;position: relative;top:16%;left: 28%">
 		<form id="loginForm" class="form-horizontal" role="form" style="padding: 8% " action="${APP_PATH }/index/toindex" method="post">
 			<div class="form-group" style="padding-bottom: 24px;text-align: center;">
-				<h3 style="color:white;font-weight: 400;letter-spacing: 10px;">停车场管理系统</h3>
+				<h3 style="color:white;font-weight: 400;letter-spacing: 10px;">智慧停车管理云平台</h3>
 			</div>
 			<div class="form-group" style="padding:0 15% 0 20%">
 				<%--@declare id="firstname"--%><label for="firstname" class="col-sm-2 control-label font" >账号</label>

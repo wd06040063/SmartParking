@@ -34,9 +34,7 @@ public class LoginController {
 	public Msg loginIndex(User user,HttpSession httpSession,HttpServletRequest request) {
 		User user1 = userService.findUserByUsername(user.getUsername());
 		String code = request.getParameter("code");
-		System.out.println("code="+code);
 		String vcode = (String) request.getSession().getAttribute("verifycode");
-
 		if (code.equals(vcode)) {
 			if (user1.getPassword().equals(user.getPassword())) {
 				httpSession.setAttribute("user", user1);
@@ -53,7 +51,7 @@ public class LoginController {
 	@ResponseBody
 	@RequestMapping("/login/checkUsernameExit")
 	public Msg checkUsernameExit(@RequestParam("username")String username){
-		System.out.println("username:"+username);
+		//System.out.println("username:"+username);
 		User user=userService.findUserByUsername(username);
 		if(user==null)
 		{

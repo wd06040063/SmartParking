@@ -9,7 +9,10 @@
 		SELECT * FROM parkinfo where parknum=#{parknum}
 	</select>
 	<select id="findParkinfoByCardnum" parameterType="String" resultType="com.wang.entity.ParkInfo" >
-		SELECT * FROM parkinfo where cardnum=#{cardnum} 
+		SELECT * FROM parkinfo where cardnum=#{cardnum}
+	</select>
+	<select id="findParkinfoByCarnum" parameterType="String" resultType="com.wang.entity.ParkInfo" >
+		SELECT * FROM parkinfo where carnum=#{carnum}
 	</select>
 	<delete id="deleteParkinfoByParkNum" parameterType="int">
 		DELETE FROM parkinfo where parknum = #{parknum}

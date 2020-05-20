@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -183,7 +184,12 @@ public class CheckController {
 	// 根据停车位号查找停车位信息
 	public Msg findParkinfoByParknum(@RequestParam("parkNum") int parknum) {
 		ParkInfo parkInfo = parkinfoservice.findParkinfoByParknum(parknum);
-		return Msg.success().add("parkInfo", parkInfo);
+		System.out.println("查找停车信息为："+parkInfo);
+		if(parkInfo.getCardnum()!=null){
+			return Msg.success().add("parkInfo", parkInfo);
+		}else{
+			return Msg.fail();
+		}
 	}
 
 	@RequestMapping("/index/check/findParkinfoByCardnum")
@@ -195,10 +201,25 @@ public class CheckController {
 		if(parkInfo!=null)
 		{
 			return Msg.success().add("parkInfo", parkInfo);
+		}else {
+			return Msg.fail();
 		}
-		return Msg.fail();
-	}
 
+	}
+	@RequestMapping("/index/check/findParkinfoByCarnum")
+	@ResponseBody
+	// 根据车牌号查找停车位信息
+	public Msg findParkinfoByCarnum(@RequestParam("carnum") String carnum) {
+		ParkInfo parkInfo = parkinfoservice.findParkinfoByCarnum(carnum);
+		System.out.println("ello"+parkInfo);
+		if(parkInfo!=null)
+		{
+			return Msg.success().add("parkInfo", parkInfo);
+		}else {
+			return Msg.fail();
+		}
+
+	}
 	@RequestMapping("/index/check/findParkinfoDetailByParknum")
 	@ResponseBody
 	//根据停车位号查找停车详细信息
@@ -227,60 +248,45 @@ public class CheckController {
 
 	@RequestMapping("/index/check/illegalSubmit")
 	@ResponseBody
+	@Transactional
 	//违规提交
-	public Msg illegalSubmit(FormData data,HttpSession httpSession)
+	public Msg illegalSubmit( HttpSession httpSession,FormData data)
 	{
-		User currentUser=(User) httpSession.getAttribute("user");
-		//System.out.println(data.getCardNum());
-		ParkInfo parkInfo=parkinfoservice.findParkinfoByCardnum(data.getCardNum());
-		//System.out.println(parkInfo.getParkin()+"hell");
+
+		User currentUser=(User) httpSession.getAttribute("user"); //获取添加违规管理员信息
+		ParkInfo parkInfo=parkinfoservice.findParkinfoByCarnum(data.getCarNum()); //获取违规车牌号
+		System.out.println("获取到前端提交违规数据："+data);
 		IllegalInfo info=new IllegalInfo();
-		IllegalInfo illegalInfo=illegalInfoService.findByCardnumParkin(data.getCardNum(),parkInfo.getParkin());
+		IllegalInfo illegalInfo=illegalInfoService.findByCarnum(data.getCarNum(),parkInfo.getParkin()); //判断是否该车有违规信息
+		System.out.println(illegalInfo);
 		if(illegalInfo!=null)
 		{
 			return Msg.fail().add("va_msg", "添加失败,已经有违规！");
 		}
-		info.setCardnum(data.getCardNum());
-		info.setCarnum(data.getCarNum());
-		String cardnum=data.getCarNum();
-		//String carnum=data.getCarNum();
-		//Depotcard depotcard=depotcardService.findByCardnum(cardnum);
-		//System.out.println(depotcard.getCardnum());
-		//	int cardid=0;
-		//User user =null;
-		/*if(depotcard!=null)
-		{
-		int cardid=depotcard.getId();
+		if(data.getCardNum()!=null){
+			info.setCardnum(data.getCardNum());
+		}
 
-		User user =userService.findUserByCardid(cardid);
-		System.out.println(user.getId()+"1");
-		info.setUid(user.getId());
-		}else {
-			info.setUid(i+1);
-		}*/
-		//info.setUsername(user.getUsername());
-		info.setIllegalInfo(data.getIllegalInfo());
-
-		//	info.setUsername(data.get);
-		//	info.setUid(currentUser.getId());
-		//info.setUid(user.getId());
-		info.setUid(0);
-		Date date=new Date();
+		info.setCarnum(data.getCarNum()); //设置车牌号
+		Date date=new Date();  //设置违规时间
 		info.setTime(date);
-
+		info.setIllegalInfo(data.getIllegalInfo());//违规信息
+		if(currentUser.getId()==1){
+			info.setUid(1);
+		}else{
+			info.setUid(2);
+		}
 		info.setParkin(parkInfo.getParkin());
-
 		info.setDelete("N");
 
 		try {
-
 			illegalInfoService.save(info);
 
 		} catch (Exception e) {
 			e.printStackTrace();
-			return Msg.fail().add("va_msg", "添加失败");
+			return Msg.fail().add("va_msg", "违规添加失败");
 		}
-		return Msg.success().add("va_msg", "添加成功");
+		return Msg.success().add("va_msg", "违规添加成功");
 	}
 
 	/*是否需要支付

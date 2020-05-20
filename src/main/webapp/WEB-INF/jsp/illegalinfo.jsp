@@ -71,8 +71,7 @@
 <script type="text/javascript">
 	function addIllegal()
 	{
-		var html = "<input id=\"judgecarnum\" name=\"judgecarnum\" value=\"0\" hidden=\"hidden\"/>"
-				+"<input id=\"parkin\" name=\"parkin\" value=\"\" hidden=\"hidden\"/>"
+		var html = "<input id=\"judgecarnum\" value=\"0\" hidden=\"hidden\"/>"
 				+ "<label>车牌号：</label><div style=\"width: 30%;\">"
 				+ "<div class=\"input-group\">"
 				+ "<input id=\"carNum\" onblur=\"findCarnum()\" name=\"carNum\" placeholder=\"请输入车牌号\" type=\"text\" class=\"form-control\">"
@@ -102,11 +101,12 @@
 		} else {
 			$.ajax({
 				type:'get',
-				//调用的是查询车位信息，传参需要传parameter为cardnum。
-				url:'${APP_PATH }/index/check/findParkinfoByCardnum',
+				//调用的是查询车位信息，传参需要传parameter为carnum。
+				url:'${APP_PATH }/index/check/findParkinfoByCarnum',
 				datatype : 'json',
-				data:{cardnum:carnum},
+				data:{carnum:carnum},
 				success : function(data) {
+					console.log(data);
 					if (data.code == 100) {
 						$("#carNum").next("span").text("");
 						$("#cardNum").val(data.extend.parkInfo.cardnum);
@@ -143,7 +143,7 @@
 			return false;
 		}
 		$.ajax({
-			type:'post',
+			type:'get',
 			url:'${APP_PATH }/index/check/illegalSubmit',
 			datatype:'text',
 			data:$("#checkForm").serializeArray(),

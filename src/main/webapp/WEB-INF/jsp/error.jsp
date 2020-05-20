@@ -12,16 +12,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>识别失败</title>
-	<link rel="stylesheet" type="text/css" href="css/htmleaf-demo.css">
-	<link rel="stylesheet" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="${APP_PATH}css/htmleaf-demo.css">
+	<link rel="stylesheet" href="${APP_PATH}/css/style.css">
 	<!--[if IE]>
 		<script src="http://libs.useso.com/js/html5shiv/3.7/html5shiv.min.js"></script>
 	<![endif]-->
 </head>
+<%
+	response.setHeader("refresh", "3;url="+request.getContextPath()+"/index/toindex");
+%>
 <body>
 	<div class="htmleaf-container">
 		<header class="htmleaf-header">
-			<h1>车牌识别失败 <span>missing cardNum</span></h1>
+			<h1>车牌识别失败 <span><span class="time"></span>秒后自动跳转至首页..........</span></h1>
 			<div class="htmleaf-links">
 				<a class="htmleaf-icon icon-htmleaf-home-outline" href="${APP_PATH }/index/toindex" title="主页" ><span> 主页</span></a>
 				<a class="htmleaf-icon icon-htmleaf-arrow-forward-outline" href="#" title="返回" target=""><span> 返回</span></a>
@@ -44,4 +47,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
 	
 </body>
+<script type="text/javascript">
+	var timeEle = document.querySelector('.time'),
+			count   = 3
+	timeEle.innerHTML = count;
+	// 设置计时器
+	var judge = setInterval(function() {
+		count--;
+		if (!count) {
+			// 清除计时器
+			clearInterval(judge);
+		};
+		// 标签当中显示时间
+		timeEle.innerHTML = count;
+	}, 1000);
+</script>
 </html>

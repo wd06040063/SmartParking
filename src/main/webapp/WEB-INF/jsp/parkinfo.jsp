@@ -145,13 +145,12 @@
     /* 文件上传 */
     function fileUpload(parkId)
     {
-        /*  window.location.assign("http://localhost:8080/depot-system/index/incomeCharts") */
         $("#id").val(parkId);
     }
 
     /* 自动入库提交 */
     function autoCheckInSubmit(){
-
+        debugger;
         $.ajax({
             type:'post',
             url:'${APP_PATH }/fileUpload1',
@@ -201,6 +200,7 @@
             data:$("#checkForm").serializeArray(),
             contentType:'application/x-www-form-urlencoded',
             success:function(data){
+                console.log(data);
                 if(data.code==100)
                 {
                     alert("入库成功！");
@@ -330,7 +330,7 @@
     /* 出库提交 */
     function checkOutSubmit(){
         $.ajax({
-            type:'post',
+            type:'get',
             url:'${APP_PATH }/index/check/checkOut',
             datatype:'text',
             data:$("#checkForm").serializeArray(),

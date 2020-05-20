@@ -10,6 +10,11 @@
 <%
     pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+<%
+response.setHeader("Pragma","No-cache");
+response.setHeader("Cache-Control","no-cache");
+response.setDateHeader("Expires", -10);
+%>
 <!doctype html>
 <html class="x-admin-sm">
 <head>
@@ -17,8 +22,6 @@
     <title>智慧停车</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta http-equiv="Cache-Control" content="no-siteapp" />
-
     <!-- Bootstrap -->
     <link href="${APP_PATH }/bootstrap-3.3.5-dist/css/bootstrap.min.css"
           rel="stylesheet" media="screen">
@@ -279,7 +282,7 @@
         <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">上传车辆车牌照片</h4>
+                <h4 class="modal-title">上传车辆车牌照片</h4>
             </div>
             <form action="${pageContext.request.contextPath}/fileUpload1" method="POST" enctype="multipart/form-data"  id="fileUploadForm">
                 <div class="modal-body" >
@@ -288,7 +291,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-primary"  >上传云端识别</button>
+                    <button type="submit" class="btn btn-primary"  onclick="autoCheckInSubmit()">上传云端识别</button>
                 </div>
             </form>
 
@@ -316,11 +319,11 @@
                 <div class="modal-body1">
                     <div id="pay_zfb">
                         <h4>支付宝：<span id="zfb_text"></span>元</h4>
-                        <img alt="" style="width: 300px;height: 300px;margin-left: 20%" src="${APP_PATH }/pic/zfb.png">
+                        <img alt="" style="width: 300px;height: 300px;margin-left: 20%" src="${APP_PATH }/pic/zfb.jpg">
                     </div>
                     <div id="pay_wx" hidden="hidden">
                         <h4>微信：<span id="wx_text"></span>元</h4>
-                        <img alt="" style="width: 300px;height: 300px;margin-left: 20%" src="${APP_PATH }/pic/wx.png">
+                        <img alt="" style="width: 300px;height: 300px;margin-left: 20%" src="${APP_PATH }/pic/wx.jpg">
                     </div>
                     <div id="pay_cash" hidden="hidden">
                         <h4>现金：<span id="cash_text"></span>元</h4>
@@ -337,5 +340,7 @@
     </div>
 </div>
 </body>
+<script>
 
+</script>
 </html>

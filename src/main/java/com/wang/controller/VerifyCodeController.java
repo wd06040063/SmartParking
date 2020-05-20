@@ -73,6 +73,12 @@ public class VerifyCodeController {
         g.dispose();
         //转换成一张图片，格式为JPEG
         ImageIO.write(image, "JPEG", response.getOutputStream());
+        String userAgent = request.getHeader("user-agent");
+        String remoteIp=request.getRemoteAddr();
+        System.out.println("动态生成的验证码是——————————————————————> "+sRand.toLowerCase());
+        System.out.println("当前登录设备信息： "+userAgent);
+        System.out.println("当前登录客户端ip: "+remoteIp);
+        System.out.println("code="+sRand.toLowerCase());
     }
 
     /**

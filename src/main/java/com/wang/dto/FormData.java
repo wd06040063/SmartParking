@@ -10,7 +10,7 @@ public class FormData {
 	private int parkNum;
 	//卡号
 	private String cardNum;
-	//停车卡号
+	//车牌号
 	private String carNum;
 	//是否临时停车
 	private int parkTem;

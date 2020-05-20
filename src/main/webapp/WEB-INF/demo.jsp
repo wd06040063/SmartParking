@@ -4,6 +4,7 @@
   Date: 2020/4/26
   Time: 11:33
   To change this template use File | Settings | File Templates.
+  http://localhost:8080/index/check/checkOut?payid=9&pay_money=10&pay_type=9&parkNum=4&parknum=4&cardNum=&carNum=%E8%BE%BDH3N183
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -62,7 +63,7 @@
     </ul>
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
-            <a href="javascript:;"><img src="${APP_PATH }/pic/head.png" class="head" alt="">admin</a>
+            <a href="javascript:;"><img src="${APP_PATH }/pic/head_one.png" class="head" alt="">admin</a>
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
@@ -81,7 +82,7 @@
 <!-- 左侧菜单开始 -->
 <div class="left-nav">
     <div class="left-message">
-        <img src="${APP_PATH }/pic/head.png" alt="">
+        <img src="${APP_PATH }/pic/head_one.png" alt="">
         <span>昵称</span>
         <a href="#">退出</a>
     </div>
@@ -232,8 +233,6 @@
 <style id="theme_style"></style>
 <!-- 右侧主体结束 -->
 <!-- 中部结束 -->
-
-
 
 <form id="checkForm">
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog"

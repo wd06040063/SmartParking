@@ -87,6 +87,7 @@ public class IndexController {
 	public String toIndex(Model model,HttpSession session)
 	{
 
+		session.setMaxInactiveInterval(5 * 60);
 		User user1=(User) session.getAttribute("user");
 
 		if(user1!=null)

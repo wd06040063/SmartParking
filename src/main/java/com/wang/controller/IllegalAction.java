@@ -28,7 +28,7 @@ public class IllegalAction {
 	@RequestMapping("index/illegal/findIllegalInfo")
 	public Msg findIllegalInfo(@RequestParam("id") Integer id)
 	{
-		IllegalInfo illegalInfo=illegalInfoService.findById(id.intValue());
+		IllegalInfo illegalInfo=illegalInfoService.findById(id);
 		if(illegalInfo==null)
 		{
 			return Msg.fail().add("va_msg", "发生错误，请重新查看！");

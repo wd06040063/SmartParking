@@ -16,6 +16,7 @@
 }
 .real-time-in img{
     padding: 12px 12px 12px 30px;
+    float: left;
 }
 .real-time-in span{
     color: #ff7b8c;
@@ -43,8 +44,47 @@
 }
 .real-time-out img{
     padding: 12px 12px 12px 30px;
+    float: left;
 }
 .real-time-out span{
     color: #83d587;
     font-size: 18px;
+}
+.real-time-im{
+    width: 40%;
+    float: left;
+    padding: 24px 0;
+
+}
+
+
+
+.style-2 {
+    list-style-type: none;
+    padding: 0;
+}
+.style-2 li {
+    font-weight: bold;
+    margin-bottom: 4px;
+    border-radius: 4px;
+}
+.style-2 em {
+    display: inline-block;
+    width: 80px;
+    font-style: normal;
+}
+.style-2 span {
+    display: inline-block;
+}
+.style-2 em {
+    text-align: right;
+    padding: 8px 8px 8px 0;
+}
+.style-2 span {
+    color: white;
+
+    padding: 4px 8px;
+    width: 30px;
+    border-radius: 4px;
+    animation: grow-padding-right 5s;
 }
