@@ -3,6 +3,7 @@
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
 <a id="findEmail" href="" target="main"
@@ -20,9 +21,9 @@
 						</div>
 						<!-- /input-group -->
 					</div>
-					<c:if test="${sessionScope.user.role==3 }">
+
 					<button style="float: left;" class="btn btn-default" type="button" onclick="addEmail()">发送信息</button>
-					</c:if>
+
 					<div class="dropdown" style="float: right; margin-right: 10%">
 						<button type="button" class="btn dropdown-toggle bt-blue"
 							id="dropdownMenu1" data-toggle="dropdown">

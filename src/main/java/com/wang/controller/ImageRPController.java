@@ -75,55 +75,9 @@ public class ImageRPController {
 
 		return "error";
 	}
+	@RequestMapping(value = "update/fileUpload")
 	@ResponseBody
-	@RequestMapping(value = "/fileUpload2")
-	public Result upload2(@RequestParam("file") MultipartFile file) {
-
-		//	System.out.println(parkId);
-		if (file.isEmpty() || file==null) {
-			List<String> responses = new ArrayList<String>();
-			responses.add("文件为空");
-			logger.info("文件为空");
-			return new Result(-1, responses, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-		}
-		String fileName = file.getOriginalFilename();
-		@SuppressWarnings("unused")
-		String suffixName = fileName.substring(fileName.lastIndexOf("."));
-		String filePath = "C:\\springUpload\\image\\";
-		// fileName = UUID.randomUUID() + suffixName;
-		File dest = new File(filePath + fileName);
-		if (!dest.getParentFile().exists()) {
-			dest.getParentFile().mkdirs();
-		}
-		try {
-			file.transferTo(dest);
-			PlateRecognise plateRecognise = new PlateRecogniseImpl();
-			String img = filePath + fileName;
-			logger.info(img);
-			List<String> res = plateRecognise.plateRecognise(filePath + fileName);
-			if (res.size() < 1 || res.contains("")) {
-				logger.info("识别失败！不如换张图片试试？");
-				List<String> responses = new ArrayList<String>();
-				responses.add("识别不了");
-				return new Result(-1, responses, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-			}
-			Result result = new Result(201, plateRecognise.plateRecognise(filePath + fileName),
-					new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-			logger.info(result.toString());
-			return result;
-		} catch (IllegalStateException | IOException e) {
-			e.printStackTrace();
-		}
-		List<String> responses = new ArrayList<String>();
-		responses.add("上传失败");
-		//	return parkInfo;
-		return new Result(-1, responses, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
-	}
-
-
-	@RequestMapping(value = "/fileUpload1")
-	@ResponseBody
-	public Msg upload(@RequestParam("file") MultipartFile file, @RequestParam("id")int id, HttpServletResponse response, HttpServletRequest request) {
+	public Msg upload(@RequestParam("fileupdate") MultipartFile file, @RequestParam("id")int id, HttpServletResponse response, HttpServletRequest request) {
 		int parkId=id;
 		ParkInfo parkInfo=new ParkInfo();
 		FormData formData=new FormData();
@@ -138,7 +92,6 @@ public class ImageRPController {
 		if (!dest.getParentFile().exists()) {
 			dest.getParentFile().mkdirs();
 		}
-
 		try {
 			file.transferTo(dest);
 			PlateRecognise plateRecognise = new PlateRecogniseImpl();
@@ -152,10 +105,7 @@ public class ImageRPController {
 				logger.info("识别失败！不如换张图片试试？");
 
 				return Msg.fail().add("va_msg", "识别失败，请重新识别！");
-				//response.setHeader("refresh", "6;url="+request.getContextPath()+"/index/toindex");
-				//return "error";
-				//response.setHeader("refresh", "5;url=/index/toindex");
-				//return "redirect:/index/toindex";
+
 			}
 			String carNum=res.get(0);
 			Result result = new Result(201, plateRecognise.plateRecognise(filePath + fileName),
@@ -174,16 +124,13 @@ public class ImageRPController {
 			}
 			parkinfoservice.saveParkinfo(formData);
 			parkspaceService.changeStatus(parkId, 1);
-			//return "index";
-			//response.setHeader("refresh", "6;url="+request.getContextPath()+"/index/toindex");
-			//return "success";
-			return Msg.success();
+
+			return Msg.success().add("vb_msg",carNum);
 		} catch (IllegalStateException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		return Msg.fail();
+		return Msg.fail().add("va_msg","车牌识别失败！请重试.......");
 	}
 
 

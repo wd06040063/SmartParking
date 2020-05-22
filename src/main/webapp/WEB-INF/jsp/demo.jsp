@@ -10,11 +10,7 @@
 <%
     pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
-<%
-response.setHeader("Pragma","No-cache");
-response.setHeader("Cache-Control","no-cache");
-response.setDateHeader("Expires", -10);
-%>
+
 <!doctype html>
 <html class="x-admin-sm">
 <head>
@@ -22,6 +18,9 @@ response.setDateHeader("Expires", -10);
     <title>智慧停车</title>
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="Wed, 26 Feb 1997 08:21:57 GMT">
     <!-- Bootstrap -->
     <link href="${APP_PATH }/bootstrap-3.3.5-dist/css/bootstrap.min.css"
           rel="stylesheet" media="screen">
@@ -38,6 +37,7 @@ response.setDateHeader("Expires", -10);
     <script src="${APP_PATH }/bootstrap-3.3.5-dist/js/bootstrap.min.js"></script>
     <script src="${APP_PATH }/bootstrap-3.3.5-dist/js/bootstrap-datetimepicker.min.js"></script>
     <script src="${APP_PATH }/bootstrap-3.3.5-dist/js/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="${APP_PATH }/js/ajaxfileupload.js" type="text/javascript"></script>
     <!-- <link rel="stylesheet" href="./css/theme5.css"> -->
     <script src="${APP_PATH }/lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="${APP_PATH }/js/xadmin.js"></script>
@@ -61,7 +61,6 @@ response.setDateHeader("Expires", -10);
         <a><i title="展开左侧栏" class="iconfont">&#xe699;</i></a>
     </div>
     <ul class="layui-nav left fast-add" lay-filter="">
-
     </ul>
     <ul class="layui-nav right" lay-filter="">
         <li class="layui-nav-item">
@@ -69,7 +68,7 @@ response.setDateHeader("Expires", -10);
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="xadmin.open('个人信息','http://www.baidu.com')">个人信息</a></dd>
+                    <a onclick="xadmin.open('个人信息','${APP_PATH}/user_update')">个人信息</a></dd>
                 <dd>
                     <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
                 <dd>
@@ -140,20 +139,20 @@ response.setDateHeader("Expires", -10);
                 </ul>
             </li>
             <li>
-            <li>
-                    <a href="javascript:;">
-                    <i class="iconfont left-nav-li" lay-tips="优惠券管理">&#xe75f;</i>
-                    <cite>优惠券管理</cite>
-                    <i class="iconfont nav_right">&#xe697;</i></a>
-                <ul class="sub-menu">
-                    <li>
-                        <a href="${APP_PATH }/index/findAllCoupon" target="main"
-                           onclick="$('div#main').load(this.href);return false;">
-                            <i class="iconfont">&#xe6a7;</i>
-                            <cite>优惠券列表</cite></a>
-                    </li>
-                </ul>
-            </li>
+<%--            <li>--%>
+<%--                    <a href="javascript:;">--%>
+<%--                    <i class="iconfont left-nav-li" lay-tips="优惠券管理">&#xe75f;</i>--%>
+<%--                    <cite>优惠券管理</cite>--%>
+<%--                    <i class="iconfont nav_right">&#xe697;</i></a>--%>
+<%--                <ul class="sub-menu">--%>
+<%--                    <li>--%>
+<%--                        <a href="${APP_PATH }/index/findAllCoupon" target="main"--%>
+<%--                           onclick="$('div#main').load(this.href);return false;">--%>
+<%--                            <i class="iconfont">&#xe6a7;</i>--%>
+<%--                            <cite>优惠券列表</cite></a>--%>
+<%--                    </li>--%>
+<%--                </ul>--%>
+<%--            </li>--%>
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="用户违规">&#xe6b6;</i>
@@ -228,7 +227,22 @@ response.setDateHeader("Expires", -10);
                     </li>
                 </ul>
             </li>
-
+            <c:if test="${sessionScope.user.role==1 }">
+                <li>
+                    <a href="javascript:;">
+                        <i class="iconfont left-nav-li" lay-tips="停车记录">&#xe6b4;</i>
+                        <cite>导出功能</cite>
+                        <i class="iconfont nav_right">&#xe697;</i></a>
+                    <ul class="sub-menu">
+                        <li>
+                        <li><a href="${APP_PATH }/index/system" target="main"
+                               onclick="$('div#main').load(this.href);return false;">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>数据导出</cite></a>
+                        </li>
+                    </ul>
+                </li>
+            </c:if>
         </ul>
     </div>
 </div>
@@ -282,19 +296,18 @@ response.setDateHeader("Expires", -10);
         <div class="modal-content" >
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">上传车辆车牌照片</h4>
+                <h4 class="modal-title">车牌信息识别</h4>
             </div>
-            <form action="${pageContext.request.contextPath}/fileUpload1" method="POST" enctype="multipart/form-data"  id="fileUploadForm">
+            <form  method="POST" enctype="multipart/form-data"  id="fileUploadForm">
                 <div class="modal-body" >
-                    <input  id='id' name='id' value='$(id)' type='hidden'>
-                    <input type="file" name="file" class="file" />
+                    <input  id='parkid' name='parkid' value='$(parkid)' type='hidden'>
+                    <input type="file" name="fileupdate" id="fileupdate"  class="file" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                    <button type="submit" class="btn btn-primary"  onclick="autoCheckInSubmit()">上传云端识别</button>
+                    <button type="button" class="btn btn-primary"  onclick="autoCheckInSubmit()">上传云端识别</button>
                 </div>
             </form>
-
         </div>
     </div>
 </div>
@@ -342,5 +355,8 @@ response.setDateHeader("Expires", -10);
 </body>
 <script>
 
+    $('body').on('hidden.bs.modal', '.modal', function () {
+        $(this).removeData('bs.modal');
+    });
 </script>
 </html>

@@ -17,7 +17,7 @@ public class IllegalInfo implements Serializable{
 	private String username;
 	private String deleted;
 	private Date parkin;
-	
+
 	public Date getParkin() {
 		return parkin;
 	}

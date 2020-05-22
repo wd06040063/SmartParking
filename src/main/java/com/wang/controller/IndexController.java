@@ -83,6 +83,10 @@ public class IndexController {
 			return "login";
 		}
 	}
+	@RequestMapping("/user_update")
+	public String toUser(){
+		return "user_update";
+	}
 	@RequestMapping("/index/toindex")
 	public String toIndex(Model model,HttpSession session)
 	{

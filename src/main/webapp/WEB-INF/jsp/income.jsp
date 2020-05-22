@@ -2,6 +2,7 @@
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
 <a id="findAllIncome" href="" target="main"

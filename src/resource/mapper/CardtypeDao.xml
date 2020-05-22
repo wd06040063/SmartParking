@@ -7,5 +7,5 @@
 	</select>
 	<select id="findCardTypeByid" resultType="CardType" parameterType="int">
 		SELECT * from cardtype where id=#{typeid}
-	</select>
-</mapper>
+		</select>
+		</mapper>

@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wang.dao.ParkinfoallDao">
 	<select id="findAllParkinfoall" resultType="com.wang.dto.ParkinfoallData">
-		SELECT * from parkinfoall order by parkin desc limit #{page},#{size}
+		SELECT * from parkinfoall order by parkout desc limit #{page},#{size}
 	</select>
 	<select id="findAllParkinfoallByLike" resultType="com.wang.dto.ParkinfoallData">
-		SELECT * from parkinfoall t where t.cardnum like '%${name}%' || t.carnum like '%${name}%' || t.parknum like '%${name}%' limit #{page},#{size}
+		SELECT * from parkinfoall t where t.cardnum like '%${name}%' || t.carnum like '%${name}%' || t.parknum like '%${name}%' order by parkout desc limit #{page},#{size}
 	</select>
 	<insert id="save">
 		insert into parkinfoall (cardnum,parknum,carnum,parkin,parkout,parktemp) values(#{cardnum},#{parknum},#{carnum},#{parkin},#{parkout},#{parktemp})

@@ -2,6 +2,7 @@
 <%
     pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
 <a id="parkInfo" href="" target="main"
@@ -35,13 +36,11 @@
                         <td><c:if test="${item.status==0 }">
                             <input class="btn btn-default bt-blue" type="button"
                                    onclick="checkIn(${item.parkid},${item.id })" value="手动入库">
-                            <!--    <div class="file-container" style="display:inline-block;position:relative;overflow: hidden;vertical-align:middle">
-                            <button class="btn btn-success fileinput-button" type="button">上传</button>
-                            <input type="file"   style="position:absolute;top:0;left:0;font-size:34px; opacity:0">
-                            </div>
-                            -->
                             <button type="button" class="btn btn-default bt-purple" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
-                                自动入库
+                                车牌识别
+                            </button>
+                            <button type="button" class="btn btn-default bt-purple" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
+                                RFID识别
                             </button>
                         </c:if> <c:if test="${item.status!=0 }">
                             <input onclick="checkOut(${item.parkid})"
@@ -50,6 +49,7 @@
                                    class="btn btn-default bt-red" type="button" value="违规"/>
                         </c:if>
                         </td>
+
                         <td><input class="btn btn-default bt-green" type="button" onclick="checkDetail(${item.parkid})" value="查看"></td>
                     </tr>
                 </c:forEach>
@@ -145,30 +145,38 @@
     /* 文件上传 */
     function fileUpload(parkId)
     {
-        $("#id").val(parkId);
+        $("#parkid").val(parkId);
     }
 
     /* 自动入库提交 */
     function autoCheckInSubmit(){
         debugger;
-        $.ajax({
+        var parkid=$("#parkid").val();
+        console.log("获取到的parkid="+parkid);
+        $.ajaxFileUpload({
             type:'post',
-            url:'${APP_PATH }/fileUpload1',
-            datatype:'multipart/form-data',
-            data:$("#fileUploadForm").serializeArray(),
+            url:'${APP_PATH }/update/fileUpload',
+            data:{id:parkid},
+            secureuri : false,
+            fileElementId:'fileupdate',
+            dataType: 'json',//服务器返回的格式
+            // async : false,
             contentType:'application/x-www-form-urlencoded',
             success:function(data){
+
                 if(data.code==100)
                 {
-                    alert("自动入库成功！识别车号为："+data.extend.vb_msg);
-                    $("#myModal").modal('hide');
+                    alert("车牌识别成功！识别车号为："+data.extend.vb_msg);
+                    $("#fileModal").modal('hide');
                     $("#parkInfo").attr("href","${APP_PATH }/index/findAllCar");
                     $("#parkInfo").click();
                 }else{
                     alert(data.extend.va_msg);
                 }
             }
+
         })
+
     }
 
     /* 入库提交 */
@@ -338,6 +346,9 @@
             success:function(data){
                 alert("出库成功！");
                 $("#myModal").modal('hide');
+                $("#payForm").modal('hide');
+                $("#myModal1").modal('hide');
+
                 $("#parkInfo").attr("href","${APP_PATH }/index/findAllCar");
                 $("#parkInfo").click();
             }

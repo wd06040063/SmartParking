@@ -3,6 +3,7 @@
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
+
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
 <a id="findAllIllegalinfo" href="" target="main"
@@ -31,6 +32,7 @@
 					<th>卡号</th>
 					<th>车牌号</th>
 					<th>违规时间</th>
+					<th>违规内容</th>
 					<th>记录人员</th>
 					<th>操作</th>
 				</tr>
@@ -40,6 +42,7 @@
 						<td>${item.cardnum }</td>
 						<td>${item.carnum }</td>
 						<td>${item.formatDate }</td>
+						<td>${item.illegalInfo}</td>
 						<td>${item.username }</td>
 						<td><input class="btn btn-default bt-blue"style="margin-right: 4px" type="button" onclick="findIllegalInfo(${item.id })" value="查看"><input class="btn btn-default bt-red" type="button" onclick="deleteIllegalInfo(${item.id})" value="删除"></td>
 					</tr>
@@ -200,6 +203,7 @@
 						$("#checkSubmit").hide();
 						$(".modal-body").append(html);
 						$("#myModal").modal('show');
+
 					}
 				else{
 					alert(data.extend.va_msg);
@@ -249,4 +253,8 @@
 				$("#findIllegal").click();
 		
 	}
+
+	$("#modal").on("hidden.bs.modal", function() {
+		$(this).removeData("bs.modal");
+	});
 </script>
