@@ -5,70 +5,70 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
 	<div class="tables">
-	<table class="table"style="margin: 2%;width: 96%">
-				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">历史停车管理</div>
-					<div class="col-lg-6" style="width: 30%; float: left;">
-						<div class="input-group">
+		<table class="table"style="margin: 2%;width: 96%">
+			<caption>
+				<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">历史停车管理</div>
+				<div class="col-lg-6" style="width: 30%; float: left;">
+					<div class="input-group">
 						<c:if test="${sessionScope.user.role!=3 }">
 							<input id="number" placeholder="请输入车位号/卡号/车牌号" type="text" class="form-control" >
 						</c:if>
 						<c:if test="${sessionScope.user.role==3 }">
 							<input id="number" placeholder="车牌号" type="text" class="form-control" >
 						</c:if>
-							 <span
+						<span
 								class="input-group-btn">
 								<button class="btn btn-default btn1" onclick="findDepotNum()" type="button">查询</button>
 								<a id="findAllDepot" href="" target="main"
-					onclick="$('div#main').load(this.href);return false;"></a>
+								   onclick="$('div#main').load(this.href);return false;"></a>
 							</span>
-						</div>
-						<!-- /input-group -->
 					</div>
-				</caption>
+					<!-- /input-group -->
+				</div>
+			</caption>
+			<tr>
+				<th>序号</th>
+				<th>车位号</th>
+				<th>卡号</th>
+				<th>车牌号</th>
+				<th>入库时间</th>
+				<th>出库时间</th>
+				<th>查看</th>
+			</tr>
+			<c:forEach items="${parkinfoallDatas.pages }" var="item" varStatus="status">
 				<tr>
-					<th>序号</th>
-					<th>车位号</th>
-					<th>卡号</th>
-					<th>车牌号</th>
-					<th>入库时间</th>
-					<th>出库时间</th>
-					<th>查看</th>
+					<td style="vertical-align:middle">${status.index+1 }</td>
+					<td style="vertical-align:middle">${item.parknum }</td>
+					<td style="vertical-align:middle">${item.cardnum }</td>
+					<td style="vertical-align:middle">${item.carnum }</td>
+					<td style="vertical-align:middle">${item.parkin }</td>
+					<td style="vertical-align:middle">${item.parkout }</td>
+					<td style="vertical-align:middle"><input class="x-admin-sm layui-btn bt-blue1" onclick="findParkinfoById(${item.id})" type="button" value="查看"></td>
 				</tr>
-				<c:forEach items="${parkinfoallDatas.pages }" var="item" varStatus="status">
-					<tr>
-						<td>${status.index+1 }</td>
-						<td>${item.parknum }</td>
-						<td>${item.cardnum }</td>
-						<td>${item.carnum }</td>
-						<td>${item.parkin }</td>
-						<td>${item.parkout }</td>
-						<td><input class="btn btn-default bt-green" onclick="findParkinfoById(${item.id})" type="button" value="查看"></td>
-					</tr>
-					</c:forEach>
-			</table>
+			</c:forEach>
+		</table>
 	</div>
-		<div class="page">
-			<ul class="pagination">
-				
-				<li><a href="${APP_PATH }/index/findAllDepot?tag=${parkinfoallDatas.tag}&&page=${parkinfoallDatas.current}&&name=${parkinfoallDatas.extra}" 
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+	<div class="page">
+		<ul class="pagination">
+
+			<li><a href="${APP_PATH }/index/findAllDepot?tag=${parkinfoallDatas.tag}&&page=${parkinfoallDatas.current}&&name=${parkinfoallDatas.extra}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+			<li><a href="${APP_PATH }/index/findAllDepot?tag=${parkinfoallDatas.tag}&&page=${parkinfoallDatas.current+1}&&name=${parkinfoallDatas.extra}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">${parkinfoallDatas.current+1}</a></li>
+			<c:if test="${parkinfoallDatas.current+1>=parkinfoallDatas.countPage}">
 				<li><a href="${APP_PATH }/index/findAllDepot?tag=${parkinfoallDatas.tag}&&page=${parkinfoallDatas.current+1}&&name=${parkinfoallDatas.extra}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">${parkinfoallDatas.current+1}</a></li>
-				<c:if test="${parkinfoallDatas.current+1>=parkinfoallDatas.countPage}">
-				<li><a href="${APP_PATH }/index/findAllDepot?tag=${parkinfoallDatas.tag}&&page=${parkinfoallDatas.current+1}&&name=${parkinfoallDatas.extra}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-				<c:if test="${parkinfoallDatas.current+1<parkinfoallDatas.countPage}">
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+			<c:if test="${parkinfoallDatas.current+1<parkinfoallDatas.countPage}">
 				<li><a href="${APP_PATH }/index/findAllDepot?tag=${parkinfoallDatas.tag}&&page=${parkinfoallDatas.current+2}&&name=${parkinfoallDatas.extra}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-			</ul>
-		</div>
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+		</ul>
+	</div>
 
 </div>
 <script type="text/javascript">

@@ -5,74 +5,143 @@
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
-<a id="parkInfo" href="" target="main"
-   onclick="$('div#main').load(this.href);return false;"></a>
+    <a id="parkInfo" href="" target="main"
+       onclick="$('div#main').load(this.href);return false;"></a>
     <div class="tables">
-            <table class="table" style="margin: 2%;width: 96%">
-                <caption>
-                    <div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">停车位管理</div>
-                    <div class="col-lg-6" style="width: 30%; float: left;">
-                        <div class="input-group">
-                            <input id="inputcardnum" placeholder="请输入卡号" type="text" class="form-control">
-                            <span class="input-group-btn">
+        <table class="table" style="margin: 2%;width: 96%;vertical-align: middle;">
+            <caption>
+                <div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">停车位管理</div>
+                <div class="col-lg-6" style="width: 30%; float: left;">
+                    <div class="input-group">
+                        <input id="inputcardnum" placeholder="请输入卡号" type="text" class="form-control">
+                        <span class="input-group-btn">
 								<button class="btn btn-default btn1" type="button" onclick="checkOutByCardnum()">出库</button>
 							</span>
-                        </div>
-                        <!-- /input-group -->
                     </div>
-                </caption>
-                <tr>
-                    <th>车位号</th>
-                    <th>状态</th>
-                    <th>类型</th>
-                    <th>操作</th>
-                    <th>查看</th>
-                </tr>
-                <c:forEach items="${parkspaces.pages }" var="item">
-                    <tr>
-                        <td>${item.parkid }</td>
-                        <td>${item.status==0?"空":"已停" }</td>
-                        <td>${item.tag==1?"正常车位":item.tag==2?"临时车位":"紧急车位" }</td>
-                        <td><c:if test="${item.status==0 }">
-                            <input class="btn btn-default bt-blue" type="button"
-                                   onclick="checkIn(${item.parkid},${item.id })" value="手动入库">
-                            <button type="button" class="btn btn-default bt-purple" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
-                                车牌识别
-                            </button>
-                            <button type="button" class="btn btn-default bt-purple" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
-                                RFID识别
-                            </button>
-                        </c:if> <c:if test="${item.status!=0 }">
-                            <input onclick="checkOut(${item.parkid})"
-                                   class="btn btn-default bt-blue" type="button" value="出库"/>
-                            <input onclick="addIllegal(${item.parkid})"
-                                   class="btn btn-default bt-red" type="button" value="违规"/>
-                        </c:if>
-                        </td>
+                    <!-- /input-group -->
 
-                        <td><input class="btn btn-default bt-green" type="button" onclick="checkDetail(${item.parkid})" value="查看"></td>
-                    </tr>
-                </c:forEach>
-            </table>
+                </div> <button id="create1" style="float: right; margin-right: 30px" class=" x-admin-sm layui-btn  bt-blue1" type="button" onclick="">RFID识别</button>
+
+            </caption>
+            <tr>
+                <th>车位号</th>
+                <th>状态</th>
+                <th>类型</th>
+                <th>操作</th>
+                <th>查看</th>
+            </tr>
+            <c:forEach items="${parkspaces.pages }" var="item">
+                <tr>
+                    <td style="vertical-align:middle">${item.parkid }</td>
+                    <td style="vertical-align:middle">${item.status==0?"空":"已停" }</td>
+                    <td style="vertical-align:middle">${item.tag==1?"正常车位":item.tag==2?"临时车位":"紧急车位" }</td>
+                    <td style="vertical-align:middle"><c:if test="${item.status==0 }">
+                        <input class=" x-admin-sm layui-btn  bt-blue1" type="button"
+                               onclick="checkIn(${item.parkid},${item.id })" value="手动入库">
+                        <button type="button" class=" x-admin-sm layui-btn  bt-blue2" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
+                            车牌识别
+                        </button>
+                        <!--<button type="button" class="btn x-admin-sm layui-btn btn-default bt-purple" data-toggle="modal" data-target="#fileModal" onclick="fileUpload(${item.parkid})">
+                        RFID识别
+                        </button>-->
+                    </c:if> <c:if test="${item.status!=0 }">
+                        <input onclick="checkOut(${item.parkid})"
+                               class=" x-admin-sm layui-btn  bt-blue1" type="button" value="出库"/>
+                        <input onclick="addIllegal(${item.parkid})"
+                               class=" x-admin-sm layui-btn  bt-yellow" type="button" value="违规"/>
+                    </c:if>
+                    </td>
+
+                    <td><input class=" x-admin-sm layui-btn bt-blue1" type="button" onclick="checkDetail(${item.parkid})" value="查看"></td>
+                </tr>
+            </c:forEach>
+        </table>
     </div>
     <div class="page">
-            <ul class="pagination">
+        <ul class="pagination">
 
-                <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current}"target="main"
-                       onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+            <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current}"target="main"
+                   onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+            <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current+1}" target="main"
+                   onclick="$('div#main').load(this.href);return false;">${parkspaces.current+1} </a></li>
+            <c:if test="${parkspaces.current+1>=parkspaces.countPage}">
                 <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current+1}" target="main"
-                       onclick="$('div#main').load(this.href);return false;">${parkspaces.current+1} </a></li>
-                <c:if test="${parkspaces.current+1>=parkspaces.countPage}">
-                    <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current+1}" target="main"
-                           onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-                </c:if>
-                <c:if test="${parkspaces.current+1<parkspaces.countPage}">
-                    <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current+2}" target="main"
-                           onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-                </c:if>
-            </ul>
+                       onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+            </c:if>
+            <c:if test="${parkspaces.current+1<parkspaces.countPage}">
+                <li><a href="${APP_PATH }/index/findAllCar?tag=${parkspaces.tag}&&page=${parkspaces.current+2}" target="main"
+                       onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+            </c:if>
+        </ul>
     </div>
 </div>
+<script src="https://layui.hcwl520.com.cn/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '${APP_PATH }/css/dist/'
+    }).extend({
+        notice: 'notice'
+    });
+
+    //layui模块的定义
+    layui.use(['notice', 'jquery', 'layer'], function () {
+        var notice = layui.notice;
+        var layer = layui.layer;
+        var $ = layui.jquery;
+
+        // 初始化配置，同一样式只需要配置一次，非必须初始化，有默认配置
+        /* notice.options = {
+             closeButton:true,//显示关闭按钮
+             debug:false,//启用debug
+             positionClass:"toast-top-right",//弹出的位置,
+             showDuration:"300",//显示的时间
+             hideDuration:"1000",//消失的时间
+             timeOut:"2000",//停留的时间
+             extendedTimeOut:"1000",//控制时间
+             showEasing:"swing",//显示时的动画缓冲方式
+             hideEasing:"linear",//消失时的动画缓冲方式
+             iconClass: 'toast-info', // 自定义图标，有内置，如不需要则传空 支持layui内置图标/自定义iconfont类名
+             onclick: null, // 点击关闭回调
+         };
+
+
+         notice.warning("成功");
+         notice.info("提示信息：毛都没有...");
+         notice.error("大佬，我咋知道怎么肥四！");
+         notice.success("大佬，我咋知道怎么肥四！");
+
+ */
+        var notice01;
+        $("#create1").click(function () {
+            var options = {
+                closeButton:true,//显示关闭按钮
+                debug:false,//启用debug
+                positionClass:"toast-top-center",//弹出的位置,
+                showDuration:"300",//显示的时间
+                hideDuration:"1000",//消失的时间
+                timeOut:"2000",//停留的时间,0则不自动关闭
+                extendedTimeOut:"1000",//控制时间
+                showEasing:"swing",//显示时的动画缓冲方式
+                hideEasing:"linear",//消失时的动画缓冲方式
+                iconClass: 'layui-icon toast-info', // 自定义图标，有内置，如不需要则传空 支持layui内置图标/自定义iconfont类名,需要完整加上 layui-icon/icon iconfont
+                onclick: null, // 点击关闭回调
+            }
+            notice01 = notice.success("苏E 6HX29  成功停入 12 号车位","RFID自动识别",options);
+        });
+
+
+        $("#closeAll").click(function () {
+            layer.msg('移除生成的notice通知');
+            notice.clear(notice01);
+        });
+
+
+        window.setTimeout(function () {
+
+        }, 3500);
+
+    });
+</script>
 <script type="text/javascript">
     $(document).ready(function(){
         var role=$("#role").val();

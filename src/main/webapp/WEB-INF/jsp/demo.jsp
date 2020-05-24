@@ -201,14 +201,14 @@
             <li>
                 <a href="javascript:;">
                     <i class="iconfont left-nav-li" lay-tips="用户消息列表">&#xe6ce;</i>
-                    <cite>消息管理</cite>
+                    <cite>公告管理</cite>
                     <i class="iconfont nav_right">&#xe697;</i></a>
                 <ul class="sub-menu">
                     <li>
                     <li><a href="${APP_PATH }/index/findAllEmail" target="main"
                            onclick="$('div#main').load(this.href);return false;">
                             <i class="iconfont">&#xe6a7;</i>
-                            <cite>消息列表</cite></a>
+                            <cite>公告列表</cite></a>
                     </li>
 
                 </ul>

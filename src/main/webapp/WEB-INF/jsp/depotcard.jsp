@@ -4,13 +4,13 @@
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
-<a id="findDepotcard" href="" target="main"
-					onclick="$('div#main').load(this.href);return false;"></a>
+	<a id="findDepotcard" href="" target="main"
+	   onclick="$('div#main').load(this.href);return false;"></a>
 	<div class="tables">
-	<table class="table" style="margin: 2%;width: 96%">
-				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">停车卡管理</div>
-					<c:if test="${sessionScope.user.role!=3 }">
+		<table class="table" style="margin: 2%;width: 96%">
+			<caption>
+				<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">停车卡管理</div>
+				<c:if test="${sessionScope.user.role!=3 }">
 					<div class="col-lg-6" style="width: 30%; float: left;">
 						<div class="input-group">
 							<input id="cardnum2" placeholder="请输入卡号" type="text" class="form-control" > <span
@@ -20,54 +20,54 @@
 						</div>
 						<!-- /input-group -->
 					</div>
-					<button style="float: left;" class="btn btn-default bt-yellow" type="button" onclick="addDepotCard()">添加停车卡</button>
-					</c:if>
-					<button style="float: right; margin-right: 30px" class="btn btn-default bt-blue" type="button" onclick="rechargeDepotCard()">充值停车卡</button>
-				</caption>
+					<button style="float: left;" class="x-admin-sm layui-btn bt-blue1" type="button" onclick="addDepotCard()">添加停车卡</button>
+				</c:if>
+				<button style="float: right; margin-right: 30px" class="x-admin-sm layui-btn bt-blue2" type="button" onclick="rechargeDepotCard()">充值停车卡</button>
+			</caption>
+			<tr>
+				<th>序号</th>
+				<th>卡号</th>
+				<th>卡类型</th>
+				<th>余额</th>
+				<th>持卡人</th>
+				<th>发卡时间</th>
+				<th>挂失</th>
+				<th>操作</th>
+			</tr>
+			<c:forEach items="${depotcardManagerDatas.pages }" var="item" varStatus="status">
 				<tr>
-					<th>序号</th>
-					<th>卡号</th>
-					<th>卡类型</th>
-					<th>余额</th>
-					<th>持卡人</th>
-					<th>发卡时间</th>
-					<th>挂失</th>
-					<th>操作</th>
+					<td style="vertical-align:middle">${status.index+1 }</td>
+					<td id="alert_cardnum${status.count}">${item.cardnum }</td>
+					<td style="vertical-align:middle">${item.type }</td>
+					<td style="vertical-align:middle">${item.money }</td>
+					<td style="vertical-align:middle">${item.username }</td>
+					<td style="vertical-align:middle">${item.time }</td>
+					<td style="vertical-align:middle">${item.islose==0?"否":"是" }</td>
+					<td style="vertical-align:middle"><input class="x-admin-sm layui-btn bt-blue1" style="margin-right: 4px" type="button" onclick="alertCard(${status.count})" value="修改"><c:if test="${sessionScope.user.role!=3 }"><input class="x-admin-sm layui-btn bt-red" type="button" onclick="deleteCard(${status.count})" value="删除"></c:if></td>
 				</tr>
-				<c:forEach items="${depotcardManagerDatas.pages }" var="item" varStatus="status">
-					<tr>
-						<td>${status.index+1 }</td>
-						<td id="alert_cardnum${status.count}">${item.cardnum }</td>
-						<td>${item.type }</td>
-						<td>${item.money }</td>
-						<td>${item.username }</td> 	
-						<td>${item.time }</td>
-						<td>${item.islose==0?"否":"是" }</td>
-						<td><input class="btn btn-default bt-blue" style="margin-right: 4px" type="button" onclick="alertCard(${status.count})" value="修改"><c:if test="${sessionScope.user.role!=3 }"><input class="btn btn-default bt-red" type="button" onclick="deleteCard(${status.count})" value="删除"></c:if></td>
-					</tr>
-					</c:forEach>
-			</table>
+			</c:forEach>
+		</table>
 	</div>
 	<div class="page">
-			<ul class="pagination">
-				
-				<li><a href="${APP_PATH }/index/toDepotcardIndex?tag=${depotcardManagerDatas.tag}&&page=${depotcardManagerDatas.current}&&cardnum=${depotcardManagerDatas.extra}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+		<ul class="pagination">
+
+			<li><a href="${APP_PATH }/index/toDepotcardIndex?tag=${depotcardManagerDatas.tag}&&page=${depotcardManagerDatas.current}&&cardnum=${depotcardManagerDatas.extra}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+			<li><a href="${APP_PATH }/index/toDepotcardIndex?tag=${depotcardManagerDatas.tag}&&page=${depotcardManagerDatas.current+1}&&cardnum=${depotcardManagerDatas.extra}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">${depotcardManagerDatas.current+1}</a></li>
+			<c:if test="${depotcardManagerDatas.current+1>=depotcardManagerDatas.countPage}">
 				<li><a href="${APP_PATH }/index/toDepotcardIndex?tag=${depotcardManagerDatas.tag}&&page=${depotcardManagerDatas.current+1}&&cardnum=${depotcardManagerDatas.extra}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">${depotcardManagerDatas.current+1}</a></li>
-				<c:if test="${depotcardManagerDatas.current+1>=depotcardManagerDatas.countPage}">
-				<li><a href="${APP_PATH }/index/toDepotcardIndex?tag=${depotcardManagerDatas.tag}&&page=${depotcardManagerDatas.current+1}&&cardnum=${depotcardManagerDatas.extra}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-				<c:if test="${depotcardManagerDatas.current+1<depotcardManagerDatas.countPage}">
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+			<c:if test="${depotcardManagerDatas.current+1<depotcardManagerDatas.countPage}">
 				<li><a href="${APP_PATH }/index/toDepotcardIndex?tag=${depotcardManagerDatas.tag}&&page=${depotcardManagerDatas.current+2}&&cardnum=${depotcardManagerDatas.extra}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-			</ul>
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+		</ul>
 	</div>
 </div>
 <script type="text/javascript">

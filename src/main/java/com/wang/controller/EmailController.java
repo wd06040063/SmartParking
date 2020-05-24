@@ -32,7 +32,14 @@ public class EmailController {
 		Email email=new Email();
 		User user=(User) session.getAttribute("user");
 		try {
-			if(user.getRole()==3)
+			if(user.getRole()==1)
+			{
+				email.setTitle(emailData.getTitle());
+				email.setContent(emailData.getContent());
+				email.setTime(new Date());
+				email.setSendid(user.getId());
+				email.setToid(1);
+			}else if(user.getRole()==3)
 			{
 				email.setTitle(emailData.getTitle());
 				email.setContent(emailData.getContent());

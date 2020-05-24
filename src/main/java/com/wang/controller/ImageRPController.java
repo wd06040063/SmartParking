@@ -86,7 +86,9 @@ public class ImageRPController {
 		String fileName = file.getOriginalFilename();
 		@SuppressWarnings("unused")
 		String suffixName = fileName.substring(fileName.lastIndexOf("."));
-		String filePath = "C:/springUpload/image/";
+		String filePath= request.getServletContext().getRealPath("/image/");
+		System.out.println("上传路径为："+filePath);
+		//String filePath = "C:/springUpload/image/";
 		// fileName = UUID.randomUUID() + suffixName;
 		File dest = new File(filePath + fileName);
 		if (!dest.getParentFile().exists()) {

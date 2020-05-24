@@ -8,19 +8,90 @@
     <meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi" />
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/xadmin.css">
-    <link rel="stylesheet"href="./css/visual.css">
+    <link rel="stylesheet" href="./css/visual.css">
 
     <link rel="stylesheet" type="text/css" href="css/adjector.css" />
 
     <script src="./lib/layui/layui.js" charset="utf-8"></script>
     <script type="text/javascript" src="./js/xadmin.js"></script>
-    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
-    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+      <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+      <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
     <script src="js/modernizr.js"></script>
 
     <script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
     <script type="text/javascript" src="js/adjector.js"></script>
+    <style >
+        div, ul, li, span, img {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .marquee {
+            margin: 10px 1%;
+            width: 48%;
+            height: 70px;
+            align-items: center;
+            color: #3A3A3A;
+            background-color: white;
+            display: flex;
+            box-sizing: border-box;
+            float: left;
+            border-radius: 10px;
 
+        }
+
+        .marquee_title {
+            padding: 0 20px;
+            height: 70px;
+            line-height: 70px;
+            background-color: #e0f1ff;
+            color: #1E9FFF;
+            align-items: center;
+        }
+
+        .marquee_box {
+            display: block;
+            position: relative;
+            width: 100%;
+            height: 30px;
+            overflow: hidden;
+        }
+
+        .marquee_list {
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        .marquee_top {
+            transition: all 0.5s;
+            margin-top: -30px
+        }
+
+        .marquee_list li {
+            height: 30px;
+            line-height: 30px;
+            font-size: 18px;
+            font-weight: bold;
+            padding-left: 20px;
+        }
+
+        .marquee_list li span {
+            padding: 0 2px;
+        }
+
+        .red {
+            color: #ff7b8c;
+            font-size: 20px;
+        }
+        .blue{
+            color: #1E9FFF;
+            font-size: 20px;
+        }
+        .green{
+            color:  #83d587;
+        }
+    </style>
     <script type="text/javascript">
         $(document).ready(function(){
             $(".contain .adject").adjector();
@@ -31,22 +102,47 @@
 <div class="layui-fluid">
     <div class="real-time">
         <h2>实时记录</h2>
-        <div class="real-time-in" id="robo-wrapper">
-            <img src="images/read.png" alt="">
-            <div  class="contain real-time-im"><span class="adject">浙A 25553|辽C 56M25|辽H 94C95|辽H 345N3|辽B 25553 </span> 停入 <span class="adject"> 12|32|12|41|18 </span> 号车位</div>
-            <div class="real-time-t contain">
-                时间：<span class="adject">11|11|11|12|12</span> 时 <span class="adject">21|25|30|01|05</span> 分
+        <div class="vueBox1">
+            <div class="marquee">
+                <div class="marquee_title">
+                    <span class="iconfont" style="font-size: 32px">&#xe6e3;</span>
+                </div>
+                <div class="marquee_box">
+                    <ul class="marquee_list" :class="{marquee_top:animate}">
+                        <li v-for="(item, index) in marqueeList">
+                            <i class="iconfont blue">&#xe6bb;</i>
+                            <span > {{item.amount}}</span>
+                            <span class="blue">{{item.name}}</span>
+                            <span>停入</span>
+                            <span class="red"> {{item.num}}</span>
+                            <span>号车位</span>
+
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
-        <div class="real-time-out" id="robo-wrapper">
-            <img src="images/green.png" alt="">
-            <div  class="contain real-time-im"><span class="adject"> 辽A 842H6|辽A 3N123|黑A 957H6|辽C H6234|浙A 25553 </span> 离开 <span class="adject">12|32|12|41|18 </span> 号车位</div>
-            <div class="real-time-t contain" style="background-color: #d8efd9;">
-                时间：<span class="adject">11|11|11|12|12</span> 时 <span class="adject">21|25|30|01|05</span> 分
+        <div class="vueBox2">
+            <div class="marquee">
+                <div class="marquee_title">
+                    <span class="iconfont" style="font-size: 32px;">&#xe6e3;</span>
+                </div>
+                <div class="marquee_box">
+                    <ul class="marquee_list" :class="{marquee_top:animate}">
+                        <li v-for="(item, index) in marqueeList">
+                            <i class="iconfont blue">&#xe6bb;</i>
+                            <span > {{item.time}}</span>
+                            <span class="blue">{{item.name}}</span>
+                            <span>离开</span>
+                            <span class="green"> {{item.num}}</span>
+                            <span>号车位</span>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>
-    <div class="layui-col-sm12 layui-col-md5" style="margin: 20px 2%;width: 45%">
+    <div class="layui-col-sm12 layui-col-md5" style="margin: 10px 1%;width: 48%">
         <div class="layui-card">
             <div class="layui-card-header" style="font-weight: bold">停车场情况</div>
             <div class="layui-card-body" style="min-height: 280px;">
@@ -54,12 +150,12 @@
 
             </div>
             <div style="position: relative;top: -40px;" >
-                <section><ul class="style-2"><li><em>已用车位</em><span style="padding-right: 40%;background: #9384f1;">310</span></li><li><em>空闲车位</em><span style="padding-right: 45%;background: #519edd;">355</span></li></ul></section>
+                <section><ul class="style-2"><li><em>已用车位</em><span style="padding-right: 40%;background: rgba(147,132,241,0.47);">310</span></li><li><em>空闲车位</em><span style="padding-right: 45%;background: #519edd;">355</span></li></ul></section>
             </div>
         </div>
     </div>
 
-    <div class="layui-col-sm12 layui-col-md5" style="margin: 20px 2%;width: 45%">
+    <div class="layui-col-sm12 layui-col-md5" style="margin: 10px 1%;width: 48%">
         <div class="layui-card">
             <div class="layui-card-header" style="font-weight: bold">收入情况</div>
             <div class="layui-card-body" style="min-height: 280px;">
@@ -68,12 +164,12 @@
             <div style="position: relative;top: -40px;" >
                 <section><ul class="style-2"><li><em>支付宝</em><span style="padding-right: 60%;background: #519edd;">152</span></li>
                     <li><em>微信</em><span style="padding-right: 50%;background: #83d587;">120</span></li>
-                    <li><em>现金</em><span style="padding-right: 13%;background:#ff7b8c;">38</span></li>
+                    <li><em>现金</em><span style="padding-right: 13%;background:rgb(253,162,173);">38</span></li>
                 </ul></section>
             </div>
         </div>
     </div>
-    <div class="layui-col-sm12 layui-col-md6"style="margin: 20px 2%;width: 94%">
+    <div class="layui-col-sm12 layui-col-md6"style="margin: 10px 1%;width: 98%">
         <div class="layui-card">
             <div class="layui-card-header" style="font-weight: bold">今日入库/出库时间曲线</div>
             <div class="layui-card-body" style="min-height: 280px;">
@@ -84,25 +180,108 @@
     </div>
 
 
-    <!-- <div class="layui-row layui-col-space15">
-         <div class="layui-col-sm12 layui-col-md6">
-             <div class="layui-card">
-                 <div class="layui-card-header">最新一周新增用户</div>
-                 <div class="layui-card-body" style="min-height: 280px;">
-                     <div id="main1" class="layui-col-sm12" style="height: 300px;"></div>
+   <!-- <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm12 layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header">最新一周新增用户</div>
+                <div class="layui-card-body" style="min-height: 280px;">
+                    <div id="main1" class="layui-col-sm12" style="height: 300px;"></div>
 
-                 </div>
-             </div>
-         </div>
-     </div>-->
+                </div>
+            </div>
+        </div>
+    </div>-->
     <script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+    <script type="text/javascript" src="js/vue.min.js"></script>
+    <script type="text/javascript">
+        const vm1 = new Vue({
+            el: ".vueBox1",
+            data: {
+                animate: false,
+                marqueeList: [
+                    {
+                        name: '辽A 23333',
+                        num: '12',
+                        amount: '12:30'
+                    },
+                    {
+                        name: '辽A 11111',
+                        num: '41',
+                        amount: '11:28'
+                    },
+                    {
+                        name: '辽A 23342',
+                        num: '66',
+                        amount: '11:45'
+                    },
+                    {
+                        name: '辽A 12345',
+                        num: '28',
+                        amount: '14:23'
+                    }
+                ]
+            },
+            created: function () {
+                setInterval(this.showMarquee, 3000)
+            },
+            methods: {
+                showMarquee: function () {
+                    this.animate = true;
+                    setTimeout(()=>{
+                        this.marqueeList.push(this.marqueeList[0]);
+                        this.marqueeList.shift();
+                        this.animate = false;
+                    },500)},
+            }
+        });
+        const vm2 = new Vue({
+            el: ".vueBox2",
+            data: {
+                animate: false,
+                marqueeList: [
+                    {
+                        name: '辽A 842H6',
+                        num: '14',
+                        time: '11:42'
+                    },
+                    {
+                        name: '辽A 3N123',
+                        num: '23',
+                        time: '15:30'
+                    },
+                    {
+                        name: '黑A 957H6',
+                        num: '18',
+                        time: '12:10'
+                    },
+                    {
+                        name: '辽C H6234',
+                        num: '36',
+                        time: '14:23'
+                    }
+                ]
+            },
+            created: function () {
+                setInterval(this.showMarquee, 5000)
+            },
+            methods: {
+                showMarquee: function () {
+                    this.animate = true;
+                    setTimeout(()=>{
+                        this.marqueeList.push(this.marqueeList[0]);
+                        this.marqueeList.shift();
+                        this.animate = false;
+                    },500)},
+            }
+        });
+    </script>
     <script type="text/javascript">
         // 基于准备好的dom，初始化echarts实例
         var myChart = echarts.init(document.getElementById('main3'));
 
         // 指定图表的配置项和数据
         var option = {
-            color:['#519edd','#9384f1'],
+            color:['#519edd','#bebcf1'],
             tooltip : {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"
@@ -143,7 +322,7 @@
 
         // 指定图表的配置项和数据
         var option = {
-            color:['#519edd','#83d587','#ff7b8c'],
+            color:['#519edd','#83d587','#fda2ad'],
             tooltip : {
                 trigger: 'item',
                 formatter: "{a} <br/>{b} : {c} ({d}%)"

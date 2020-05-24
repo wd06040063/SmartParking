@@ -6,88 +6,89 @@
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
-<a id="findEmail" href="" target="main"
-	onclick="$('div#main').load(this.href);return false;"></a>
+	<a id="findEmail" href="" target="main"
+	   onclick="$('div#main').load(this.href);return false;"></a>
 	<div class="tables">
-	<table class="table"style="margin: 2%;width: 96%">
-				<caption>
-					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">信息情况</div>
-					<div class="col-lg-6" style="width: 30%; float: left;">
-						<div class="input-group">
-							<input placeholder="输入标题" id="content" type="text" class="form-control" > <span
-								class="input-group-btn">
+		<table class="table"style="margin: 2%;width: 96%">
+			<caption>
+				<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">公告管理</div>
+				<div class="col-lg-6" style="width: 30%; float: left;">
+					<div class="input-group">
+						<input placeholder="输入标题" id="content" type="text" class="form-control" > <span
+							class="input-group-btn">
 								<button class="btn btn-default btn1" onclick="findByContent()" type="button">查询</button>
 							</span>
-						</div>
-						<!-- /input-group -->
 					</div>
+					<!-- /input-group -->
+				</div>
 
-					<button style="float: left;" class="btn btn-default" type="button" onclick="addEmail()">发送信息</button>
+				<button style="float: left;" class="btn btn-default" type="button" onclick="addEmail()">编辑新公告</button>
 
-					<div class="dropdown" style="float: right; margin-right: 10%">
-						<button type="button" class="btn dropdown-toggle bt-blue"
+				<div class="dropdown" style="float: right; margin-right: 10%">
+					<button type="button" class="btn dropdown-toggle bt-blue"
 							id="dropdownMenu1" data-toggle="dropdown">
-							查看状态 <span class="caret"></span>
-						</button>
-						<ul class="dropdown-menu" role="menu"
-							aria-labelledby="dropdownMenu1">
-							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="${APP_PATH }/index/findAllEmail?tag=4"
-								onclick="$('div#main').load(this.href);return false;">全部</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="${APP_PATH }/index/findAllEmail?tag=2"
-								onclick="$('div#main').load(this.href);return false;">发送</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="${APP_PATH }/index/findAllEmail?tag=0"
-								onclick="$('div#main').load(this.href);return false;">未读</a></li>
-							<li role="presentation"><a role="menuitem" tabindex="-1"
-								href="${APP_PATH }/index/findAllEmail?tag=1"
-								onclick="$('div#main').load(this.href);return false;">已读</a></li>
-						</ul>
-					</div>
-				</caption>
+						查看状态 <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu"
+						aria-labelledby="dropdownMenu1">
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+												   href="${APP_PATH }/index/findAllEmail?tag=4"
+												   onclick="$('div#main').load(this.href);return false;">全部</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+												   href="${APP_PATH }/index/findAllEmail?tag=2"
+												   onclick="$('div#main').load(this.href);return false;">发送</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+												   href="${APP_PATH }/index/findAllEmail?tag=0"
+												   onclick="$('div#main').load(this.href);return false;">未读</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+												   href="${APP_PATH }/index/findAllEmail?tag=1"
+												   onclick="$('div#main').load(this.href);return false;">已读</a></li>
+					</ul>
+				</div>
+			</caption>
+			<tr>
+				<th>序号</th>
+				<th>发送人</th>
+				<th>收件人</th>
+				<th>标题</th>
+				<th>发送时间</th>
+				<th>状态</th>
+				<th>操作</th>
+			</tr>
+			<c:forEach items="${emails.pages }" var="item" varStatus="status">
 				<tr>
-					<th>序号</th>
-					<th>发送人</th>
-					<th>收件人</th>
-					<th>标题</th>
-					<th>发送时间</th>
-					<th>状态</th>
-					<th>操作</th>
+					<td style="vertical-align:middle">${status.index+1 }</td>
+					<td style="vertical-align:middle">${item.sendUsername }</td>
+<%--					<td style="vertical-align:middle">${item.toUsername==''?'管理员':item.toUsername }</td>--%>
+					<td style="vertical-align:middle">全体成员</td>
+					<td style="vertical-align:middle">${item.title }</td>
+					<td style="vertical-align:middle">${item.time }</td>
+					<td style="vertical-align:middle">${item.isSend==1?'发送':item.isRead==0?'未读':item.isRead==1?'已读':'已发送' }</td>
+					<td style="vertical-align:middle"><input class="x-admin-sm layui-btn bt-blue1"style="margin-right: 4px" type="button" onclick="findDetail(${item.id })" value="查看"><input class="x-admin-sm layui-btn bt-red" type="button" onclick="deleteEmail(${item.id})" value="删除"></td>
 				</tr>
-				<c:forEach items="${emails.pages }" var="item" varStatus="status">
-					<tr>
-						<td>${status.index+1 }</td>
-						<td>${item.sendUsername }</td>
-						<td>${item.toUsername==''?'管理员':item.toUsername }</td>
-						<td>${item.title }</td>
-						<td>${item.time }</td>
-						<td>${item.isSend==1?'发送':item.isRead==0?'未读':item.isRead==1?'已读':'已回复' }</td>
-						<td><input class="btn btn-default bt-blue"style="margin-right: 4px" type="button" onclick="findDetail(${item.id })" value="查看"><input class="btn btn-default bt-red" type="button" onclick="deleteEmail(${item.id})" value="删除"></td>
-					</tr>
-					</c:forEach>
-			</table>
+			</c:forEach>
+		</table>
 	</div>
 	<div class="page">
-			<ul class="pagination">
-				
-				<li><a href="${APP_PATH }/index/findAllEmail?page=${emails.current}&&tag=${tag}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+		<ul class="pagination">
+
+			<li><a href="${APP_PATH }/index/findAllEmail?page=${emails.current}&&tag=${tag}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+			<li><a href="${APP_PATH }/index/findAllEmail?page=${emails.current+1}&&tag=${tag}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">${emails.current+1}</a></li>
+			<c:if test="${emails.current+1>=emails.countPage}">
 				<li><a href="${APP_PATH }/index/findAllEmail?page=${emails.current+1}&&tag=${tag}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">${emails.current+1}</a></li>
-				<c:if test="${emails.current+1>=emails.countPage}">
-				<li><a href="${APP_PATH }/index/findAllEmail?page=${emails.current+1}&&tag=${tag}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-				<c:if test="${emails.current+1<emails.countPage}">
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+			<c:if test="${emails.current+1<emails.countPage}">
 				<li><a href="${APP_PATH }/index/findAllEmail?page=${emails.current+2}&&tag=${tag}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-			</ul>
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+		</ul>
 	</div>
 </div>
 <script type="text/javascript">

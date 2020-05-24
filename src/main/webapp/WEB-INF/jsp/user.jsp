@@ -1,99 +1,99 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+		 pageEncoding="UTF-8"%>
 <%
 	pageContext.setAttribute("APP_PATH", request.getContextPath());
 %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
-<a id="findUser" href="" target="main"
-	onclick="$('div#main').load(this.href);return false;"></a>
+	<a id="findUser" href="" target="main"
+	   onclick="$('div#main').load(this.href);return false;"></a>
 	<div class="tables">
-<table class="table"style="margin: 2%;width: 96%">
-	<caption>
-		<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">用户管理</div>
-		<c:if test="${sessionScope.user.role!=3 }">
-		<button class="btn btn-default btn1" type="button" onclick="addUser()">添加用户</button>
-		<input id="user_role" value="${sessionScope.user.role!=3 }" hidden="hidden"/>
-		<div class="dropdown" style="float: right; margin-right: 10%">
-			<button type="button"style="" class="btn dropdown-toggle bt-blue" id="dropdownMenu1"
-				data-toggle="dropdown">
-				查看用户 <span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-				<li role="presentation"><a role="menuitem" tabindex="-1"
-					href="${APP_PATH }/index/findAllUser?tag=3" target="main"
-					onclick="$('div#main').load(this.href);return false;">用户</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1"
-					href="${APP_PATH }/index/findAllUser?tag=2" target="main"
-					onclick="$('div#main').load(this.href);return false;">管理员</a></li>
-				<c:if test="${sessionScope.user.role==1 }">
-				<li role="presentation"><a role="menuitem" tabindex="-1"
-					href="${APP_PATH }/index/findAllUser?tag=1" target="main"
-					onclick="$('div#main').load(this.href);return false;">超级管理员</a></li>
+		<table class="table"style="margin: 2%;width: 96%">
+			<caption>
+				<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">用户管理</div>
+				<c:if test="${sessionScope.user.role!=3 }">
+					<button class="x-admin-sm layui-btn bt-blue1" type="button" onclick="addUser()">添加用户</button>
+					<input id="user_role" value="${sessionScope.user.role!=3 }" hidden="hidden"/>
+					<div class="dropdown" style="float: right; margin-right: 10%">
+						<button type="button"style="" class="x-admin-sm layui-btn bt-blue2" id="dropdownMenu1"
+								data-toggle="dropdown">
+							查看用户 <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+													   href="${APP_PATH }/index/findAllUser?tag=3" target="main"
+													   onclick="$('div#main').load(this.href);return false;">用户</a></li>
+							<li role="presentation"><a role="menuitem" tabindex="-1"
+													   href="${APP_PATH }/index/findAllUser?tag=2" target="main"
+													   onclick="$('div#main').load(this.href);return false;">管理员</a></li>
+							<c:if test="${sessionScope.user.role==1 }">
+								<li role="presentation"><a role="menuitem" tabindex="-1"
+														   href="${APP_PATH }/index/findAllUser?tag=1" target="main"
+														   onclick="$('div#main').load(this.href);return false;">超级管理员</a></li>
+							</c:if>
+						</ul>
+					</div>
 				</c:if>
-			</ul>
-		</div>
-		</c:if>
-	</caption>
-	<tr>
-		<th>序号</th>
-		<th>用户名</th>
-		<th>真实姓名</th>
-		<th>性别</th>
-		<th>联系电话</th>
-		<c:if test="${sessionScope.user.role!=3 }">
-		<th>权限</th>
-		</c:if>
-		<th>用户卡</th>
-		<th>操作</th>
-	</tr>
-	<c:forEach items="${users.pages }" var="item" varStatus="status">
-		<tr>
-			<td>${status.index+1 }</td>
-			<td>${item.username }</td>
-			<td>${item.name }</td>
-			<td>${item.sex }</td>
-			<td>${item.tel }</td>
-			<td>${item.role==1?"超级管理员":item.role==2?"管理员":"用户" }</td>
-			<c:if test="${sessionScope.user.role!=3 }">
-			<td>${item.cardnum }</td>
-			</c:if>
-			<td><input class="btn btn-default bt-blue" type="button" onclick="editUser(${item.id})" value="修改">
-			<c:if test="${sessionScope.user.role!=3 }">
-			<input
-				class="btn btn-default bt-red" type="button" onclick="deleteUser( '${item.username }',${item.id})" value="删除">
-			</c:if>
-				</td>
-		</tr>
-	</c:forEach>
-</table>
+			</caption>
+			<tr>
+				<th>序号</th>
+				<th>用户名</th>
+				<th>真实姓名</th>
+				<th>性别</th>
+				<th>联系电话</th>
+				<c:if test="${sessionScope.user.role!=3 }">
+					<th>权限</th>
+				</c:if>
+				<th>用户卡</th>
+				<th>操作</th>
+			</tr>
+			<c:forEach items="${users.pages }" var="item" varStatus="status">
+				<tr>
+					<td style="vertical-align:middle">${status.index+1 }</td>
+					<td style="vertical-align:middle">${item.username }</td>
+					<td style="vertical-align:middle">${item.name }</td>
+					<td style="vertical-align:middle">${item.sex }</td>
+					<td style="vertical-align:middle">${item.tel }</td>
+					<td style="vertical-align:middle">${item.role==1?"超级管理员":item.role==2?"管理员":"用户" }</td>
+					<c:if test="${sessionScope.user.role!=3 }">
+						<td style="vertical-align:middle">${item.cardnum }</td>
+					</c:if>
+					<td style="vertical-align:middle"><input class="x-admin-sm layui-btn bt-blue1" type="button" onclick="editUser(${item.id})" value="修改">
+						<c:if test="${sessionScope.user.role!=3 }">
+							<input
+									class="x-admin-sm layui-btn bt-red" type="button" onclick="deleteUser( '${item.username }',${item.id})" value="删除">
+						</c:if>
+					</td>
+				</tr>
+			</c:forEach>
+		</table>
 	</div>
 	<div class="page">
-<ul class="pagination">
-				
-				<li><a href="${APP_PATH }/index/findAllUser?tag=${users.tag}&&page=${users.current}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+		<ul class="pagination">
+
+			<li><a href="${APP_PATH }/index/findAllUser?tag=${users.tag}&&page=${users.current}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+			<li><a href="${APP_PATH }/index/findAllUser?tag=${users.tag}&&page=${users.current+1}"
+				   target="main"
+				   onclick="$('div#main').load(this.href);return false;">${users.current+1}</a></li>
+			<c:if test="${users.current+1>=users.countPage}">
 				<li><a href="${APP_PATH }/index/findAllUser?tag=${users.tag}&&page=${users.current+1}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">${users.current+1}</a></li>
-				<c:if test="${users.current+1>=users.countPage}">
-				<li><a href="${APP_PATH }/index/findAllUser?tag=${users.tag}&&page=${users.current+1}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-				<c:if test="${users.current+1<users.countPage}">
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+			<c:if test="${users.current+1<users.countPage}">
 				<li><a href="${APP_PATH }/index/findAllUser?tag=${users.tag}&&page=${users.current+2}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-			</ul>
+					   target="main"
+					   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+			</c:if>
+		</ul>
 	</div>
 </div>
 <script type="text/javascript">
 	/* 添加用户模态框显示*/
 	function addUser() {
-        var user_role=$("#user_role").val();
+		var user_role=$("#user_role").val();
 		var html = "<input id=\"judgeusername\" name=\"judgeusername\" value=\"0\" hidden=\"hidden\"/>"
 				+ "<label>用户账号：</label><div style=\"width: 30%;\">"
 				+ "<div class=\"input-group\">"
@@ -113,11 +113,11 @@
 				+ "<select id=\"role\" name=\"role\" style=\"width:150px\" class=\"form-control\"> "
 				+ "<option value=\"3\">用户</option>"
 				+ "<option value=\"2\">管理员</option>";
-			if(user_role==1)
-			{
-			    html+=+ "<option value=\"1\">超级管理员</option>";
-			}
-				html+="</select>";
+		if(user_role==1)
+		{
+			html+=+ "<option value=\"1\">超级管理员</option>";
+		}
+		html+="</select>";
 		$("#myModalLabel").html("添加用户");
 		$("#checkSubmit").html("添加");
 		$("#checkSubmit").attr("onclick", "addUserSubmit()");
@@ -187,11 +187,11 @@
 			}
 		})
 	}
-	
-	
+
+
 	/* 编辑用户模态框显示*/
 	function editUser(uid) {
-        var user_role=$("#user_role").val();
+		var user_role=$("#user_role").val();
 		$.ajax({
 			type:'get',
 			url:'${APP_PATH }/index/user/findUserById',
@@ -199,47 +199,47 @@
 			dataType:'json',
 			success:function(data){
 				if(data.code==100){
-				var root="<label>权限：</label>"
-					+ "<select id=\"role\" name=\"role\" style=\"width:150px\" class=\"form-control\"> "
-                    + "<option value=\"2\">管理员</option>";
-				if(user_role==1)
-				{
-                    root+= "<option value=\"1\">超级管理员</option>";
-				}
-                    root+= "</select>";
-				var html ="<input  name=\"id\" value=\""+data.extend.user.id+"\" hidden=\"hidden\">"
-					+"<label>用户账号：</label><div style=\"width: 30%;\">"
-					+ "<div class=\"input-group\">"
-					+ "<input id=\"username\" name=\"username\" value=\""+data.extend.user.username+"\" type=\"text\" readonly class=\"form-control\">"
-					+ "</div>"
-					+ "</div>"
-					+"<label>真实姓名：</label><div style=\"width: 30%;\">"
-					+ "<div class=\"input-group\">"
-					+ "<input id=\"name\" name=\"name\" value=\""+data.extend.user.name+"\" type=\"text\"  class=\"form-control\">"
-					+ "</div>"
-					+ "</div>"
-					+ "<label>联系电话：</label><div style=\"width: 30%;\">"
-					+ "<div class=\"input-group\">"
-					+ "<input id=\"tel\" name=\"tel\" value=\""+data.extend.user.tel+"\" type=\"text\" class=\"form-control\">"
-					+ "</div></div>"
-					+"<label>性别：</label>"
-					+ "<select id=\"sex\" name=\"sex\" style=\"width:150px\" class=\"form-control\"> "
-					+ "<option value=\"男\">男</option>"
-					+ "<option value=\"女\">女</option>" + "</select>";
+					var root="<label>权限：</label>"
+							+ "<select id=\"role\" name=\"role\" style=\"width:150px\" class=\"form-control\"> "
+							+ "<option value=\"2\">管理员</option>";
+					if(user_role==1)
+					{
+						root+= "<option value=\"1\">超级管理员</option>";
+					}
+					root+= "</select>";
+					var html ="<input  name=\"id\" value=\""+data.extend.user.id+"\" hidden=\"hidden\">"
+							+"<label>用户账号：</label><div style=\"width: 30%;\">"
+							+ "<div class=\"input-group\">"
+							+ "<input id=\"username\" name=\"username\" value=\""+data.extend.user.username+"\" type=\"text\" readonly class=\"form-control\">"
+							+ "</div>"
+							+ "</div>"
+							+"<label>真实姓名：</label><div style=\"width: 30%;\">"
+							+ "<div class=\"input-group\">"
+							+ "<input id=\"name\" name=\"name\" value=\""+data.extend.user.name+"\" type=\"text\"  class=\"form-control\">"
+							+ "</div>"
+							+ "</div>"
+							+ "<label>联系电话：</label><div style=\"width: 30%;\">"
+							+ "<div class=\"input-group\">"
+							+ "<input id=\"tel\" name=\"tel\" value=\""+data.extend.user.tel+"\" type=\"text\" class=\"form-control\">"
+							+ "</div></div>"
+							+"<label>性别：</label>"
+							+ "<select id=\"sex\" name=\"sex\" style=\"width:150px\" class=\"form-control\"> "
+							+ "<option value=\"男\">男</option>"
+							+ "<option value=\"女\">女</option>" + "</select>";
 					if(data.extend.user.role!=3&&data.extend.role==1)
-						{
+					{
 						html+=root;
-						}
-			$("#myModalLabel").html("修改用户");
-			$("#checkSubmit").html("修改");
-			$("#checkSubmit").attr("onclick", "editUserSubmit("+data.extend.user.id+")");
-			$(".modal-body").append(html);
-			$("#myModal").modal('show');
-			$("#sex").val(data.extend.user.sex);
-			if(data.extend.user.role!=3&&data.extend.role==1)
-			{
-				$("#role").val(data.extend.user.role);
-			}
+					}
+					$("#myModalLabel").html("修改用户");
+					$("#checkSubmit").html("修改");
+					$("#checkSubmit").attr("onclick", "editUserSubmit("+data.extend.user.id+")");
+					$(".modal-body").append(html);
+					$("#myModal").modal('show');
+					$("#sex").val(data.extend.user.sex);
+					if(data.extend.user.role!=3&&data.extend.role==1)
+					{
+						$("#role").val(data.extend.user.role);
+					}
 				}
 				else{
 					alert(data.extend.va_msg);
@@ -247,7 +247,7 @@
 			}
 		})
 	}
-	
+
 	function editUserSubmit(uid) {
 		$.ajax({
 			type : 'post',
@@ -262,8 +262,8 @@
 			}
 		})
 	}
-	
-	
+
+
 	/* 删除用户模态框显示*/
 	function deleteUser(username,id) {
 		var html = "<label>确认删除,"+username+"吗？</br>删除用户会把该用户所有相关信息删除！</label><div style=\"width: 30%;\">";
@@ -271,9 +271,9 @@
 		$("#checkSubmit").html("删除");
 		$("#checkSubmit").attr("onclick","deleteUserSubmit("+id+")");
 		$(".modal-body").append(html);
-		$("#myModal").modal('show'); 
+		$("#myModal").modal('show');
 	}
-	
+
 	/* 删除用户提交 */
 	function deleteUserSubmit(uid){
 		$.ajax({
@@ -283,12 +283,12 @@
 			data:{"uid":uid},
 			success:function(data){
 				if(data.code==100)
-					{
+				{
 					$("#myModal").modal('hide');
 					$("#findUser").attr("href","${APP_PATH }/index/findAllUser");
 					$("#findUser").click();
 					alert("删除成功！");
-					}
+				}
 				else{
 					$("#myModal").modal('hide');
 					$("#findUser").attr("href","${APP_PATH }/index/findAllUser");

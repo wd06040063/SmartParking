@@ -5,23 +5,23 @@
 
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div  style="margin: 2%;background-color: #fff;">
-<a id="findAllIncome" href="" target="main"
-	onclick="$('div#main').load(this.href);return false;"></a>
+	<a id="findAllIncome" href="" target="main"
+	   onclick="$('div#main').load(this.href);return false;"></a>
 
-<form id="queryIncomes">
-	<div class="tables">
-	<table class="table"style="margin: 2%;width: 96%">
+	<form id="queryIncomes">
+		<div class="tables">
+			<table class="table"style="margin: 2%;width: 96%">
 				<caption>
 					<div style="float: left; line-height: 10px; padding: 10px 10px;font-size:14px;font-weight: 600;color: #1E9FFF">收入管理</div>
 					<div style="float: left;">
 
-							<form class="layui-form layui-col-space5">
-								<div class="layui-inline layui-show-xs-block">
-									<input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start"></div>
-								<div class="layui-inline layui-show-xs-block">
-									<input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end"></div>
+						<form class="layui-form layui-col-space5">
+							<div class="layui-inline layui-show-xs-block">
+								<input class="layui-input" autocomplete="off" placeholder="开始日" name="start" id="start"></div>
+							<div class="layui-inline layui-show-xs-block">
+								<input class="layui-input" autocomplete="off" placeholder="截止日" name="end" id="end"></div>
 
-							</form>
+						</form>
 
 					</div>
 					<div class="col-lg-6" style="width: 30%; float: left;">
@@ -35,21 +35,21 @@
 					</div>
 
 					<div class="dropdown" style="float: right; margin-right: 10%">
-				
-		<!-- <button onclick="findByCondition()" class="btn btn-default" type="button">收入分析</button> -->
-				<!--<input type="button" value="收入分析" onclick="newDoc()" class="btn btn-default">
 
-			<button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
-				data-toggle="dropdown">
-				<span id="income_method">收入方式</span><span class="caret"></span>
-			</button>
-			<input type="hidden" id="income_method_num" value="9" />
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-				<li role="presentation" onclick="chooseMethod(0)">现金</li>
-				<li role="presentation" onclick="chooseMethod(2)">微信</li>
-				<li role="presentation" onclick="chooseMethod(1)">支付宝</li>
-			</ul>-->
-		</div>
+						<!-- <button onclick="findByCondition()" class="btn btn-default" type="button">收入分析</button> -->
+						<!--<input type="button" value="收入分析" onclick="newDoc()" class="btn btn-default">
+
+                    <button type="button" class="btn dropdown-toggle" id="dropdownMenu1"
+                        data-toggle="dropdown">
+                        <span id="income_method">收入方式</span><span class="caret"></span>
+                    </button>
+                    <input type="hidden" id="income_method_num" value="9" />
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation" onclick="chooseMethod(0)">现金</li>
+                        <li role="presentation" onclick="chooseMethod(2)">微信</li>
+                        <li role="presentation" onclick="chooseMethod(1)">支付宝</li>
+                    </ul>-->
+					</div>
 				</caption>
 				<tr>
 					<th>序号</th>
@@ -65,45 +65,45 @@
 				</tr>
 				<c:forEach items="${incomes.pages }" var="item" varStatus="status">
 					<tr>
-						<td>${status.index+1 }</td>
-						<td>${item.carnum }</td>
-						<td>${item.cardnum }</td>
-						<td>${item.money }</td>
-						<td>${item.method==0?'现金':item.method==1?'支付宝':item.method==2?'微信':'扣卡费' }</td>
-						<td>${item.source==0?'充值':'出库' }</td>
-						<td>${item.time }</td>
-						<td>${item.duration }</td>
-						<td>${item.isillegal }</td>
-						<td><input class="btn btn-default bt-green" type="button" onclick="findIncomeInfo(${item.id })" value="查看"></td>
+						<td style="vertical-align:middle">${status.index+1 }</td>
+						<td style="vertical-align:middle">${item.carnum }</td>
+						<td style="vertical-align:middle">${item.cardnum }</td>
+						<td style="vertical-align:middle">${item.money }</td>
+						<td style="vertical-align:middle">${item.method==0?'现金':item.method==1?'支付宝':item.method==2?'微信':'扣卡费' }</td>
+						<td style="vertical-align:middle">${item.source==0?'充值':'出库' }</td>
+						<td style="vertical-align:middle">${item.time }</td>
+						<td style="vertical-align:middle">${item.duration }</td>
+						<td style="vertical-align:middle">${item.isillegal }</td>
+						<td style="vertical-align:middle"><input class="x-admin-sm layui-btn bt-blue1" type="button" onclick="findIncomeInfo(${item.id })" value="查看"></td>
 					</tr>
-					</c:forEach>
+				</c:forEach>
 			</table>
-		<div class="page">
-			<ul class="pagination">
-				
-				<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
-				<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current+1}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">${incomes.current+1}</a></li>
-				<c:if test="${incomes.current+1>=incomes.countPage}">
-				<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current+1}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-				<c:if test="${incomes.current+1<incomes.countPage}">
-				<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current+2}"
-				target="main"
-					onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
-				</c:if>
-			</ul>
-		</div>
+			<div class="page">
+				<ul class="pagination">
+
+					<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current}"
+						   target="main"
+						   onclick="$('div#main').load(this.href);return false;">&laquo;</a></li>
+					<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current+1}"
+						   target="main"
+						   onclick="$('div#main').load(this.href);return false;">${incomes.current+1}</a></li>
+					<c:if test="${incomes.current+1>=incomes.countPage}">
+						<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current+1}"
+							   target="main"
+							   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+					</c:if>
+					<c:if test="${incomes.current+1<incomes.countPage}">
+						<li><a href="${APP_PATH }/index/findAllIncome?tag=${incomes.tag}&&page=${incomes.current+2}"
+							   target="main"
+							   onclick="$('div#main').load(this.href);return false;">&raquo;</a></li>
+					</c:if>
+				</ul>
+			</div>
 			<div class="income-ad" >
-					总收入：${countMoney}元<br>
-					</div>
-	</div>
-</form>
+				总收入：${countMoney}元<br>
+			</div>
+		</div>
+	</form>
 </div>
 <script>layui.use('laydate',
 		function() {
